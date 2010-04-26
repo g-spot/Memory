@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -27,47 +28,7 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
 
     private MemoryBean memoryBean = null;
     private final String FILENAME_BACKGROUND = "img/card_background.png";
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet memServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet memServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-            */
-        } finally { 
-            out.close();
-        }
-    } 
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+  
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -139,12 +100,31 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
         for(int i=1;i<=cardCount;i++)
         {
             Card c = new Card();
+            
             c.setCardID(String.valueOf(i));
             c.setFileName("img/card_background.png");
             c.setStatus(Card.CardStatus.FOLDED);
             cards.put(String.valueOf(i), c);
+
         }
         return cards;
+    }
+
+    public static HashMap<String,String> initFileNames(int cardCount)
+    {
+        HashMap<String,String> fileNames = new HashMap<String,String>();
+        for(int i=1;i<=cardCount;i++)
+        {
+            Random r = new Random();
+            int nextID,j;
+            while(fileNames.containsKey(String.valueOf((nextID = (r.nextInt(16)) + 1))));
+            if(i > (cardCount/2))
+                j = i - (cardCount/2);
+            else
+                j = i;
+            fileNames.put(String.valueOf(nextID), "img/card_images/card" + j + ".jpg");
+        }
+        return fileNames;
     }
 
     public void cardClicked(String cardID)
@@ -152,20 +132,20 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
         Card card = memoryBean.getCards().get(cardID);
         if(card.getStatus() == CardStatus.FOLDED)
         {
-            int cardIDInt = Integer.parseInt(cardID);
+            /*int cardIDInt = Integer.parseInt(cardID);
             if(Integer.parseInt(cardID) > (memoryBean.getCards().size()/2))
-                cardIDInt = cardIDInt - (memoryBean.getCards().size()/2);
+                cardIDInt = cardIDInt - (memoryBean.getCards().size()/2);*/
             if(memoryBean.getFirstCard() == null)
             {
                 memoryBean.setFirstCard(card);
                 card.setStatus(CardStatus.UNFOLDED);
-                card.setFileName("img/card_images/card" + cardIDInt + ".jpg");
+                card.setFileName(memoryBean.getFileNames().get(cardID));
             }
             else if(memoryBean.getSecondCard() == null)
             {
                 memoryBean.setSecondCard(card);
                 card.setStatus(CardStatus.UNFOLDED);
-                card.setFileName("img/card_images/card" + cardIDInt + ".jpg");
+                card.setFileName(memoryBean.getFileNames().get(cardID));
 
                 memoryBean.setTrialCount(memoryBean.getTrialCount() + 1);
             /*}

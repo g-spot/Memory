@@ -85,14 +85,15 @@
 			</div>
                     <div id="card-box">
                         <form name="spielbrett" method="POST" action="MemServlet">
-                            <div>
+                            <table>
+                            <tr>
                             <% for(int i=1;i<=16;i++) // TODO insert table size
                                {
                                  if(i > 1 && (i-1)%4 == 0)
                                  {
                             %>
-                            </div>
-                            <div>
+                            </tr>
+                            <tr>
                             <%
                                  }
                                  /*if(memoryBean != null && memoryBean.getCards() != null && memoryBean.getCards().get(String.valueOf(i)) != null && memoryBean.getCards().get(String.valueOf(i)).getStatus() == model.Card.CardStatus.FOLDED)
@@ -107,13 +108,14 @@
                                      if(memoryBean != null && memoryBean.getCards() != null)
                                      {*/
                             %>
-                                <input name="<%=i %>" type="image" src="<%= memoryBean.getCards().get(String.valueOf(i)).getFileName() %>" alt="Eine aufgedeckte Karte"/>
+                                <td id="card"><input name="<%=i %>" type="image" src="<%= memoryBean.getCards().get(String.valueOf(i)).getFileName() %>" alt="Eine aufgedeckte Karte"/></td>
                             <%
                                      /*}
                                  }*/
                                }
                             %>
-                            </div>
+                            </tr>
+                            </table>
 				<!--<div>
                                     <input type="image" src="img/card_background.png" alt="Eine nicht aufgedeckte Karte"/>
 					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
