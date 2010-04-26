@@ -22,6 +22,7 @@
 		<div id="header">
 			<img src="img/header_left_v2.png" alt="Logo der Lehrveranstaltung EWA" />
 		</div>
+                <jsp:text>What the heck???</jsp:text>
 		<div id="navigation_container">
 			<ul id="navigation">
 				<li>|&nbsp;Userdaten &auml;ndern</li>

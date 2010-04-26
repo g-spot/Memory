@@ -1,4 +1,5 @@
-# ignore build.xml
+# ignore build.xml and build folder
 build.xml
+build/
 # ignore private properties
 nbproject/private/
