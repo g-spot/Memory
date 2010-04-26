@@ -24,9 +24,9 @@
 		</div>
 		<div id="navigation_container">
 			<ul id="navigation">
-				<li>|&nbsp;Userdaten &auml;ndern</li>
-				<li>&nbsp;|&nbsp;Zur&uuml;ck zur Lounge</li>
-				<li>&nbsp;|&nbsp;Ausloggen</li>
+				<li>&nbsp;Userdaten &auml;ndern&nbsp;</li>
+				<li>&nbsp;Zur&uuml;ck zur Lounge&nbsp;</li>
+				<li>&nbsp;Ausloggen&nbsp;</li>
 			</ul>
 		</div>
 		<div id="content">
@@ -85,8 +85,24 @@
                                 </ul>
 			</div>
                     <div id="card-box">
-                        <form name="spielbrett" action="POST">
-				<div>
+                        <form name="spielbrett" method="POST" action="">
+                            <div>
+                            <% for(int i=0;i<16;i++) // TODO insert table size
+                               {
+                                 if(i > 0 && i%4 == 0)
+                                 {
+                            %>
+                            </div>
+                            <div>
+                            <%
+                                 }
+                            %>
+                                <input type="image" id="card<%=i %>" src="img/card_background.png" alt="Eine nicht aufgedeckte Karte"/>
+                            <%
+                               }
+                            %>
+                            </div>
+				<!--<div>
                                     <input type="image" src="img/card_background.png" alt="Eine nicht aufgedeckte Karte"/>
 					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
 					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
@@ -109,7 +125,7 @@
 					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
 					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
 					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-				</div>
+				</div>-->
                         </form>
                     </div>
                     <div id="clear-divider"></div>

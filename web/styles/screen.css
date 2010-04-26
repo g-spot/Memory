@@ -47,6 +47,7 @@ body {
 	float:left;
 	background:#000000;
 	color:#ffffff;
+        border-left:1px solid white;
 }
 
 #content {
