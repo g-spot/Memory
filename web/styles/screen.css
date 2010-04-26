@@ -180,3 +180,9 @@ p {
 	text-align:left;
 	color:white;
 }
+
+#favorites
+{
+    list-style:none;
+    padding:0;
+}

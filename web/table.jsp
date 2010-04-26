@@ -22,7 +22,6 @@
 		<div id="header">
 			<img src="img/header_left_v2.png" alt="Logo der Lehrveranstaltung EWA" />
 		</div>
-                <jsp:text>What the heck???</jsp:text>
 		<div id="navigation_container">
 			<ul id="navigation">
 				<li>|&nbsp;Userdaten &auml;ndern</li>
@@ -67,22 +66,26 @@
 					</tr>
 				</table>
 				<h2>Top-Künstler</h2>
-				<p>
-					<a href="#"><img src="img/muse.jpg" alt="Bild der Alternative Band Muse" />&nbsp;Muse</a>
-				</p>
-				<p>
-					<a href="#"><img src="img/placebo.jpg" alt="Bild der Alternative Band Placebo" />&nbsp;Placebo</a>
-				</p>					<p>
+                                <ul id="favorites">
+                                    <li>
+                                        <a href="#"><img src="img/muse.jpg" alt="Bild der Alternative Band Muse" />&nbsp;Muse</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><img src="img/placebo.jpg" alt="Bild der Alternative Band Placebo" />&nbsp;Placebo</a>
+                                    </li>
+                                    <li>
 					<a href="#"><img src="img/radiohead.png" alt="Bild der Alternative Band Radiohead" />&nbsp;Radiohead</a>
-				</p>
-				<p>
+                                    </li>
+                                    <li>
 					<a href="#"><img src="img/incubus.jpeg" alt="Bild der Alternative Band Incubus" />&nbsp;Incubus</a>
-				</p>
-				<p>
+                                    </li>
+                                    <li>
 					<a href="#"><img src="img/foo_fighters.jpeg" alt="Bild der Alternative Band Foo Fighters" />&nbsp;Foo-Fighters</a>
-				</p>
+                                    </li>
+                                </ul>
 			</div>
-                    <div id="card-box"><form name="spielbrett" action="POST">
+                    <div id="card-box">
+                        <form name="spielbrett" action="POST">
 				<div>
                                     <input type="image" src="img/card_background.png" alt="Eine nicht aufgedeckte Karte"/>
 					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
@@ -107,9 +110,9 @@
 					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
 					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
 				</div>
-			</div>
-                    </form>
-			<div id="clear-divider"></div>
+                        </form>
+                    </div>
+                    <div id="clear-divider"></div>
 		</div>
 		<div id="footer">
 			&copy; 2010 EWA Memory.
