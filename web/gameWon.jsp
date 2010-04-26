@@ -14,6 +14,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Sie haben gewonnen.</h1>
+        <a href="./table.jsp">Noch mal spielen</a>
     </body>
 </html>

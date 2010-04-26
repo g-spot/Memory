@@ -12,29 +12,42 @@ import java.util.ArrayList;
  *
  * @author christian.kondler
  */
-public class memoryAPI {
-
-    public memoryAPI(){
-        cards = new ArrayList<CardBean>();
+public class MemoryAPI {
+/*
+    public MemoryAPI(){
+        //cards = new ArrayList<Card>();
 
     }
 
-    private ArrayList<CardBean> cards;
 
-    public void shuffleCards(ArrayList<CardBean> list){
-       Collections.shuffle(cards);
+    public void shuffleCards(ArrayList<Card> list){
+       //Collections.shuffle(getCards());
     }
 
-    public void addCards(CardBean c){
-        this.cards.add(c);
+    public static HashMap<String,Card> initCards(int cardCount){
+        HashMap<String,Card> cards = new HashMap<String,Card>();
+        for(int i=1;i<=cardCount;i++)
+        {
+            Card c = new Card();
+            c.setCardID(String.valueOf(i));
+            c.setFileName("img/card_background.png");
+            c.setStatus(Card.CardStatus.FOLDED);
+            cards.put(String.valueOf(i), c);
+        }
+        return cards;
     }
 
-    public boolean compareCards(CardBean c1, CardBean c2){
+    public static void cardClicked(String cardID)
+    {
+
+    }
+
+    public boolean compareCards(Card c1, Card c2){
         if(c1.getCardName().equals(c2.getCardName())){
             return true;
         }
         else
             return false;
     }
-
+*/
 }

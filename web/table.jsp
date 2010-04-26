@@ -3,11 +3,10 @@
     Created on : Apr 25, 2010, 6:42:58 PM
     Author     : art-jackal
 --%>
-<jsp:useBean id="cardBean" class="model.CardBean" scope="session"/>
-<jsp:useBean id="UserBean" class="model.UserBean" scope="session"/>
+<jsp:useBean id="memoryBean" class="model.MemoryBean" scope="session"/>
+<jsp:useBean id="userBean" class="model.UserBean" scope="session"/>
+<jsp:setProperty name="memoryBean" property="*"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-
 
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
@@ -41,16 +40,16 @@
 					</tr>
 					<tr>
 						<th class="tablehead">Paare</th>
-						<td>1</td>
+						<td><%= memoryBean.getFoundPairs() %></td>
 						<td>0</td></tr>
 					<tr>
 						<th class="tablehead">Versuche</th>
-						<td>3</td>
+						<td><%= memoryBean.getTrialCount() %></td>
 						<td>2</td>
 					</tr>
 					<tr>
 						<th class="tablehead">Zeit</th>
-						<td>0:34</td>
+						<td><%= memoryBean.getCurrentTime() %></td>
 						<td>0:50</td>
 					</tr>
 				</table>
@@ -85,20 +84,33 @@
                                 </ul>
 			</div>
                     <div id="card-box">
-                        <form name="spielbrett" method="POST" action="">
+                        <form name="spielbrett" method="POST" action="MemServlet">
                             <div>
-                            <% for(int i=0;i<16;i++) // TODO insert table size
+                            <% for(int i=1;i<=16;i++) // TODO insert table size
                                {
-                                 if(i > 0 && i%4 == 0)
+                                 if(i > 1 && (i-1)%4 == 0)
                                  {
                             %>
                             </div>
                             <div>
                             <%
                                  }
+                                 /*if(memoryBean != null && memoryBean.getCards() != null && memoryBean.getCards().get(String.valueOf(i)) != null && memoryBean.getCards().get(String.valueOf(i)).getStatus() == model.Card.CardStatus.FOLDED)
+                                 {
+
                             %>
-                                <input type="image" id="card<%=i %>" src="img/card_background.png" alt="Eine nicht aufgedeckte Karte"/>
+                                <!--<input name="<%=i %>" type="image" src="img/card_background.png" alt="Eine nicht aufgedeckte Karte"/>
+                            --><%
+                                 }
+                                 else
+                                 {
+                                     if(memoryBean != null && memoryBean.getCards() != null)
+                                     {*/
+                            %>
+                                <input name="<%=i %>" type="image" src="<%= memoryBean.getCards().get(String.valueOf(i)).getFileName() %>" alt="Eine aufgedeckte Karte"/>
                             <%
+                                     /*}
+                                 }*/
                                }
                             %>
                             </div>
