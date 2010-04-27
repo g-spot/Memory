@@ -24,16 +24,19 @@ import model.MemoryBean;
  *
  * @author christian.kondler
  */
-public class MemServlet extends HttpServlet implements IMemoryAPI{
+public class MemServlet extends HttpServlet implements IMemoryAPI
+{
 
     private MemoryBean memoryBean = null;
     private final String FILENAME_BACKGROUND = "img/card_background.png";
 
     @Override
     protected void doGet(HttpServletRequest request,HttpServletResponse response)
-              throws ServletException,java.io.IOException {
+              throws ServletException,java.io.IOException
+    {
         response.setContentType("text/html;charset=UTF-8");
         String param = request.getParameter("invalidate");
+        
         if(param != null)
         {
             request.getSession().invalidate();
@@ -52,7 +55,8 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    throws ServletException, IOException
+    {
         response.setContentType("text/html;charset=UTF-8");
 
         java.util.Enumeration<String> params = request.getParameterNames();
@@ -96,12 +100,15 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }// </editor-fold>
 
-    public HashMap<String,Card> initCards(int cardCount) {
+    public HashMap<String,Card> initCards(int cardCount)
+    {
         HashMap<String,Card> cards = new HashMap<String,Card>();
+
         for(int i=1;i<=cardCount;i++)
         {
             Card c = new Card();
@@ -123,10 +130,12 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
             Random r = new Random();
             int nextID,j;
             while(fileNames.containsKey(String.valueOf((nextID = (r.nextInt(16)) + 1))));
+
             if(i > (cardCount/2))
                 j = i - (cardCount/2);
             else
                 j = i;
+            
             fileNames.put(String.valueOf(nextID), "img/card_images/card" + j + ".jpg");
         }
         return fileNames;
