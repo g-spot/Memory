@@ -15,6 +15,10 @@
     </head>
     <body>
         <h1>Sie haben gewonnen.</h1>
-        <a href="./table.jsp">Noch mal spielen</a>
+        <form action="MemServlet" action="GET">
+            <input type="button" onclick="javascript:history.back()" name="back" value="Zurück" />
+            <input type="submit" name="invalidate" value="Neues Spiel" />
+        </form>
+        <!--<a href="./table.jsp">Noch mal spielen</a>-->
     </body>
 </html>

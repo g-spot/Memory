@@ -28,6 +28,19 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
 
     private MemoryBean memoryBean = null;
     private final String FILENAME_BACKGROUND = "img/card_background.png";
+
+    @Override
+    protected void doGet(HttpServletRequest request,HttpServletResponse response)
+              throws ServletException,java.io.IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String param = request.getParameter("invalidate");
+        if(param != null)
+        {
+            request.getSession().invalidate();
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/table.jsp");
+            dispatcher.forward(request, response);
+        }
+    }
   
 
     /** 
@@ -59,7 +72,7 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
         if(memoryBean.getFoundPairs() >= (memoryBean.getCards().size() / 2))
         {
             //resetGame();
-            request.getSession().invalidate();
+            //request.getSession().invalidate();
             dispatcher = getServletContext().getRequestDispatcher("/gameWon.jsp");
         }
         else
