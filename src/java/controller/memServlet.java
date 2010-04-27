@@ -70,22 +70,14 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
         dispatcher.forward(request, response);
     }
 
-    private void resetGame()
+    /*private void resetGame()
     {
         memoryBean.resetSelection();
         memoryBean.setFoundPairs(0);
         memoryBean.setTrialCount(0);
-        MemServlet.initCards(16);
-    }
-
-    /*
-    @Override
-    public void init() throws ServletException
-    {
-        System.out.println("SAMMA HIER?");
-        memoryBean.setCards(initCards(16));
-    }
-*/
+        initCards(16);
+    }*/
+    
     /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description
@@ -95,7 +87,7 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
         return "Short description";
     }// </editor-fold>
 
-    public static HashMap<String,Card> initCards(int cardCount) {
+    public HashMap<String,Card> initCards(int cardCount) {
         HashMap<String,Card> cards = new HashMap<String,Card>();
         for(int i=1;i<=cardCount;i++)
         {
@@ -110,7 +102,7 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
         return cards;
     }
 
-    public static HashMap<String,String> initFileNames(int cardCount)
+    public HashMap<String,String> initFileNames(int cardCount)
     {
         HashMap<String,String> fileNames = new HashMap<String,String>();
         for(int i=1;i<=cardCount;i++)

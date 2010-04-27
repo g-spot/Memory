@@ -41,23 +41,23 @@
 					<tr>
 						<th class="tablehead">Paare</th>
 						<td><%= memoryBean.getFoundPairs() %></td>
-						<td>0</td></tr>
+						<td>n.a.</td></tr>
 					<tr>
 						<th class="tablehead">Versuche</th>
 						<td><%= memoryBean.getTrialCount() %></td>
-						<td>2</td>
+						<td>n.a.</td>
 					</tr>
 					<tr>
 						<th class="tablehead">Zeit</th>
 						<td><%= memoryBean.getCurrentTime() %></td>
-						<td>0:50</td>
+						<td>n.a.</td>
 					</tr>
 				</table>
 				<h2>Spielinformationen</h2>
 				<table id="gameinfo" summary="Die folgende Tabelle listet die Spielinformationen auf!">
 					<tr>
 						<th>Restliche Paare</th>
-						<td>12</td>
+						<td><%= memoryBean.getPairsLeft() %></td>
 					</tr>
 					<tr>
 						<th>Thema</th>
@@ -96,50 +96,13 @@
                             <tr>
                             <%
                                  }
-                                 /*if(memoryBean != null && memoryBean.getCards() != null && memoryBean.getCards().get(String.valueOf(i)) != null && memoryBean.getCards().get(String.valueOf(i)).getStatus() == model.Card.CardStatus.FOLDED)
-                                 {
-
                             %>
-                                <!--<input name="<%=i %>" type="image" src="img/card_background.png" alt="Eine nicht aufgedeckte Karte"/>
-                            --><%
-                                 }
-                                 else
-                                 {
-                                     if(memoryBean != null && memoryBean.getCards() != null)
-                                     {*/
-                            %>
-                                <td id="card"><input name="<%=i %>" type="image" src="<%= memoryBean.getCards().get(String.valueOf(i)).getFileName() %>" alt="Eine aufgedeckte Karte"/></td>
+                                <td id="card"><input name="<%=i %>" type="image" src="<%= memoryBean.getCards().get(String.valueOf(i)).getFileName() %>" alt="Karte <%=i %>"/></td>
                             <%
-                                     /*}
-                                 }*/
                                }
                             %>
                             </tr>
                             </table>
-				<!--<div>
-                                    <input type="image" src="img/card_background.png" alt="Eine nicht aufgedeckte Karte"/>
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-				</div>
-				<div>
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-				</div>
-				<div>
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-				</div>
-				<div>
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-					<img src="img/card_background.png" alt="Eine nicht aufgedeckte Karte" />
-				</div>-->
                         </form>
                     </div>
                     <div id="clear-divider"></div>
