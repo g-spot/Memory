@@ -15,7 +15,7 @@
     </head>
     <body>
         <h1>Sie haben gewonnen.</h1>
-        <form action="MemServlet" action="GET">
+        <form action="MemServlet" method="get">
             <input type="button" onclick="javascript:history.back()" name="back" value="Zurück" />
             <input type="submit" name="invalidate" value="Neues Spiel" />
         </form>

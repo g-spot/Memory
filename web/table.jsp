@@ -84,7 +84,7 @@
                                 </ul>
 			</div>
                     <div id="card-box">
-                        <form name="spielbrett" method="POST" action="MemServlet">
+                        <form method="post" action="MemServlet">
                             <table>
                             <tr>
                             <% for(int i=1;i<=16;i++) // TODO insert table size
@@ -97,7 +97,7 @@
                             <%
                                  }
                             %>
-                                <td id="card"><input name="<%=i %>" type="image" src="<%= memoryBean.getCards().get(String.valueOf(i)).getFileName() %>" alt="Karte <%=i %>"/></td>
+                                <td><input name="<%=i %>" type="image" src="<%= memoryBean.getCards().get(String.valueOf(i)).getFileName() %>" alt="Karte <%=i %>"/></td>
                             <%
                                }
                             %>
