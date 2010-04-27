@@ -9,20 +9,24 @@ package model;
  *
  * @author art-jackal
  */
-public class UserBean {
+public class UserBean
+{
 
     public String username = "";
 
-    public UserBean(){
+    public UserBean()
+    {
 
     }
     
-    public String getUserName() {
+    public String getUserName()
+    {
 
         return username;
     }
 
-    public void setUserName(String userName) {
+    public void setUserName(String userName)
+    {
         this.username = userName;
     }
 

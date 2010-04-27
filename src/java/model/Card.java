@@ -9,7 +9,8 @@ package model;
  *
  * @author art-jackal
  */
-public class Card {
+public class Card
+{
 
     public enum CardStatus {FOLDED,UNFOLDED,FOUND};
 
@@ -17,27 +18,33 @@ public class Card {
     private String fileName = "";
     private CardStatus status;
 
-    public String getCardID (){
+    public String getCardID ()
+    {
         return this.cardID;
     }
 
-    public void setCardID(String ID){
+    public void setCardID(String ID)
+    {
         this.cardID = ID;
     }
 
-    public String getFileName (){
+    public String getFileName ()
+    {
         return this.fileName;
     }
 
-    public void setFileName(String name){
+    public void setFileName(String name)
+    {
         this.fileName = name;
     }
     
-    public CardStatus getStatus() {
+    public CardStatus getStatus()
+    {
         return status;
     }
 
-    public void setStatus(CardStatus status) {
+    public void setStatus(CardStatus status)
+    {
         this.status = status;
     }
 

@@ -12,7 +12,8 @@ import model.Card;
  *
  * @author gerhard
  */
-interface IMemoryAPI {
+interface IMemoryAPI
+{
     public HashMap<String,Card> initCards(int cardCount);
     public HashMap<String,String> initFileNames(int cardCount);
     public void cardClicked(String cardID);

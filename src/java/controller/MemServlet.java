@@ -6,11 +6,8 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,16 +21,19 @@ import model.MemoryBean;
  *
  * @author christian.kondler
  */
-public class MemServlet extends HttpServlet implements IMemoryAPI{
+public class MemServlet extends HttpServlet implements IMemoryAPI
+{
 
     private MemoryBean memoryBean = null;
     private final String FILENAME_BACKGROUND = "img/card_background.png";
 
     @Override
     protected void doGet(HttpServletRequest request,HttpServletResponse response)
-              throws ServletException,java.io.IOException {
+              throws ServletException,java.io.IOException
+    {
         response.setContentType("text/html;charset=UTF-8");
         String param = request.getParameter("invalidate");
+        
         if(param != null)
         {
             request.getSession().invalidate();
@@ -52,31 +52,38 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    throws ServletException, IOException
+    {
         response.setContentType("text/html;charset=UTF-8");
 
         java.util.Enumeration<String> params = request.getParameterNames();
         String clickedCardID = null;
+        
         if(params.hasMoreElements())
         {
+            //Hier wird die geklickte Karte herausgefunden
             String cardname = params.nextElement();
             String arr[] = cardname.split("[.]");
             if(arr.length > 0)
                 clickedCardID = arr[0];
         }
 
+        //Bean holen und den Klick verarbeiten
         memoryBean = (MemoryBean)request.getSession().getAttribute("memoryBean");
         cardClicked(clickedCardID);
 
         RequestDispatcher dispatcher = null;
         if(memoryBean.getFoundPairs() >= (memoryBean.getCards().size() / 2))
         {
+            //Siegbedingung
+
             //resetGame();
             //request.getSession().invalidate();
             dispatcher = getServletContext().getRequestDispatcher("/gameWon.jsp");
         }
         else
         {
+            //Normal weiterspielen
             dispatcher = getServletContext().getRequestDispatcher("/table.jsp");
         }
         
@@ -96,12 +103,16 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }// </editor-fold>
 
-    public HashMap<String,Card> initCards(int cardCount) {
+    public HashMap<String,Card> initCards(int cardCount)
+    {
         HashMap<String,Card> cards = new HashMap<String,Card>();
+
+        //Alle Karten Initialisieren
         for(int i=1;i<=cardCount;i++)
         {
             Card c = new Card();
@@ -115,19 +126,28 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
         return cards;
     }
 
-    
+    /**
+     * Generates a HashMap with randomized Filenames
+     * @return a HashMap
+     */
     public HashMap<String,String> initFileNames(int cardCount)
     {
         HashMap<String,String> fileNames = new HashMap<String,String>();
+        /*Wir laufen die neue Hashmap durch
+         *und erzeugen bei jedem durchlauf eine Zufallszahl
+         */
         for(int i=1;i<=cardCount;i++)
         {
             Random r = new Random();
             int nextID,j;
+            //Gesucht ist aber eine Zahl dich noch nicht als Key vorkommt
             while(fileNames.containsKey(String.valueOf((nextID = (r.nextInt(16)) + 1))));
+            //Wenn die gefundene Zahl größer als die Hälte der Kartenanzahl ist
             if(i > (cardCount/2))
-                j = i - (cardCount/2);
+                j = i - (cardCount/2); //nehmen wir sie als Zweite gleiche Karte
             else
                 j = i;
+            
             fileNames.put(String.valueOf(nextID), "img/card_images/card" + j + ".jpg");
         }
         return fileNames;
