@@ -124,15 +124,14 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
         Card card = memoryBean.getCards().get(cardID);
         if(card.getStatus() == CardStatus.FOLDED)
         {
-            /*int cardIDInt = Integer.parseInt(cardID);
-            if(Integer.parseInt(cardID) > (memoryBean.getCards().size()/2))
-                cardIDInt = cardIDInt - (memoryBean.getCards().size()/2);*/
+            // erste Karte aufdecken
             if(memoryBean.getFirstCard() == null)
             {
                 memoryBean.setFirstCard(card);
                 card.setStatus(CardStatus.UNFOLDED);
                 card.setFileName(memoryBean.getFileNames().get(cardID));
             }
+            // zweite Karte aufdecken
             else if(memoryBean.getSecondCard() == null)
             {
                 memoryBean.setSecondCard(card);
@@ -140,16 +139,20 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
                 card.setFileName(memoryBean.getFileNames().get(cardID));
 
                 memoryBean.setTrialCount(memoryBean.getTrialCount() + 1);
-            /*}
-            else
-            {*/
+
+                // found Pairs erhöhen
                 if(memoryBean.getFirstCard().getFileName().equals(memoryBean.getSecondCard().getFileName()))
                 {
                     memoryBean.getFirstCard().setStatus(CardStatus.FOUND);
                     memoryBean.getSecondCard().setStatus(CardStatus.FOUND);
                     memoryBean.setFoundPairs(memoryBean.getFoundPairs() + 1);
                 }
-                else
+            }
+            // bereits beide aufgedeckt
+            else
+            {
+                // 1. zwei ungleiche aufgedeckte Karten wieder umdrehen
+                if(!memoryBean.getFirstCard().getFileName().equals(memoryBean.getSecondCard().getFileName()))
                 {
                     memoryBean.getFirstCard().setStatus(CardStatus.FOLDED);
                     memoryBean.getSecondCard().setStatus(CardStatus.FOLDED);
@@ -157,6 +160,11 @@ public class MemServlet extends HttpServlet implements IMemoryAPI{
                     memoryBean.getSecondCard().setFileName(FILENAME_BACKGROUND);
                 }
                 memoryBean.resetSelection();
+                
+                // 2. neue erste Karte aufdecken
+                memoryBean.setFirstCard(card);
+                card.setStatus(CardStatus.UNFOLDED);
+                card.setFileName(memoryBean.getFileNames().get(cardID));
             }
             
         }
