@@ -82,10 +82,10 @@ h3 {
 	color:#ffaa00;
 }
 
-#firstname, #lastname, #dateofbirth, #sex, #username, #password, #stacksize, #passwordproof {
-	position:absolute;
-	left:20em;
-	width:140px;
+.labeledinput {
+        position:absolute;
+        left:20em;
+        width:140px;
 }
 
 p {

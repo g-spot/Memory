@@ -18,12 +18,11 @@
         </resource-bundle>
     </application>
 
-    <!--<navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
-        <navigation-case>
-            <from-action>register</from-action>
-            <to-view-id>/register.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>-->
 
+    <managed-bean>
+        <managed-bean-name>UserBean</managed-bean-name>
+        <managed-bean-class>model.UserBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>
+

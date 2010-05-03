@@ -22,15 +22,15 @@
                 </h1>
 		<p>
                     <label for="username">#{msg.login_username}</label>
-                    <h:inputText id="username" />
+                    <h:inputText id="username" styleClass="labeledinput" />
 		</p>
 		<p>
                     <label for="password">#{msg.login_password}</label>
-                    <h:inputSecret id="password" />
+                    <h:inputSecret id="password" styleClass="labeledinput" />
 		</p>
 		<p>
                     <label for="stacksize">#{msg.login_stacksize}</label>
-                    <h:selectOneListbox id="stacksize" size="1">
+                    <h:selectOneListbox id="stacksize" size="1" styleClass="labeledinput">
                         <f:selectItem itemLabel="2x2" itemValue="4" />
                         <f:selectItem itemLabel="4x4" itemValue="16" />
                         <f:selectItem itemLabel="6x6" itemValue="36" />

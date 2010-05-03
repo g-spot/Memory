@@ -19,50 +19,59 @@
                 </li>
             </ui:define>
             <ui:define name="content">
-                <h1>
-                    <h:outputText value="#{msg.register_heading}"/>
-                </h1>
-                <h:outputText value="#{msg.register_pleasefillout}" />
-                <h2>
-                    <h:outputText value="#{msg.register_personaldata}" />
-                </h2>
-                <p>
-                    <label for="firstname">#{msg.register_firstname}</label>
-                    <h:inputText id="firstname" />
-                </p>
-                <p>
-                    <label for="lastname">#{msg.register_lastname}</label>
-                    <h:inputText id="lastname" />
-                </p>
-                <p>
-                    <label for="dateofbirth">#{msg.register_dateofbirth}</label>
-                    <h:inputText id="dateofbirth" />
-                </p>
-                <p>
-                    <label for="sex">#{msg.register_sex}</label>
-                    <h:selectOneListbox id="sex" size="1">
-                        <f:selectItem itemLabel="#{msg.register_sex_male}" itemValue="0" />
-                        <f:selectItem itemLabel="#{msg.register_sex_female}" itemValue="1" />
-                    </h:selectOneListbox>
-                </p>
-                <h2>
-                    <h:outputText value="#{msg.register_logindata}" />
-                </h2>
-                <p>
-                    <label for="username">#{msg.register_username}</label>
-                    <h:inputText id="username" />
-                </p>
-                <p>
-                    <label for="password">#{msg.register_password}</label>
-                    <h:inputSecret id="password" />
-                </p>
-		<p>
-                    <label for="passwordproof">#{msg.register_passwordproof}</label>
-                    <h:inputSecret id="passwordproof" />
-                </p>
-		<p>
-                    <h:commandButton action="/register.xhtml" value="#{msg.register_register}" />
-                </p>
+                <h:form id="form">
+                    <h1>
+                        <h:outputText value="#{msg.register_heading}"/>
+                    </h1>
+                    <h:outputText value="#{msg.register_pleasefillout}" />
+                    <h2>
+                        <h:outputText value="#{msg.register_logindata}" />
+                    </h2>
+                    <p>
+                        <label for="form:username">#{msg.register_username}</label>
+                        <h:inputText id="username" styleClass="labeledinput" />
+                    </p>
+                    <p>
+                        <label for="form:password">#{msg.register_password}</label>
+                        <h:inputSecret id="password" styleClass="labeledinput" />
+                    </p>
+                    <p>
+                        <label for="form:passwordproof">#{msg.register_passwordproof}</label>
+                        <h:inputSecret id="passwordproof" styleClass="labeledinput" />
+                    </p>
+                    <p>
+                        <label for="form:check_additional_information">Zusätzliche Daten angeben</label>
+                        <h:selectBooleanCheckbox id="check_additional_information" value="#{UserBean.additionalInfoGiven}" immediate="true">
+                        </h:selectBooleanCheckbox>
+                    </p>
+                    <h:panelGroup id="additional_information">
+                        <h2>
+                            <h:outputText value="#{msg.register_personaldata}" />
+                        </h2>
+                        <p>
+                            <label for="form:firstname">#{msg.register_firstname}</label>
+                            <h:inputText id="firstname" styleClass="labeledinput" rendered="#{UserBean.additionalInfoGiven == true}" />
+                        </p>
+                        <p>
+                            <label for="form:lastname">#{msg.register_lastname}</label>
+                            <h:inputText id="lastname" styleClass="labeledinput" />
+                        </p>
+                        <p>
+                            <label for="form:dateofbirth">#{msg.register_dateofbirth}</label>
+                            <h:inputText id="dateofbirth" styleClass="labeledinput" />
+                        </p>
+                        <p>
+                            <label for="form:sex">#{msg.register_sex}</label>
+                            <h:selectOneListbox id="sex" size="1" styleClass="labeledinput">
+                                <f:selectItem itemLabel="#{msg.register_sex_male}" itemValue="0" />
+                                <f:selectItem itemLabel="#{msg.register_sex_female}" itemValue="1" />
+                            </h:selectOneListbox>
+                        </p>
+                    </h:panelGroup>
+                    <p>
+                        <h:commandButton action="/register.xhtml" value="#{msg.register_register}" />
+                    </p>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>
