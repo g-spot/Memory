@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+
+        <ui:composition template="./pageTemplate.xhtml">
+            <ui:param name="pageTitle" value="#{msg.login_pagetitle}" />
+            <ui:define name="navigation">
+                <li>
+                    <h:outputLink value="./">#{msg.navigation_backtolounge}</h:outputLink>
+                </li>
+                <li>
+                    <h:outputLink value="./">#{msg.navigation_login}</h:outputLink>
+                </li>
+            </ui:define>
+            <ui:define name="content">
+                <h1>
+                    <h:outputText value="#{msg.login_heading}"/>
+                </h1>
+		<p>
+                    <label for="username">#{msg.login_username}</label>
+                    <h:inputText id="username" />
+		</p>
+		<p>
+                    <label for="password">#{msg.login_password}</label>
+                    <h:inputSecret id="password" />
+		</p>
+		<p>
+                    <label for="stacksize">#{msg.login_stacksize}</label>
+                    <h:selectOneListbox id="stacksize" size="1">
+                        <f:selectItem itemLabel="2x2" itemValue="4" />
+                        <f:selectItem itemLabel="4x4" itemValue="16" />
+                        <f:selectItem itemLabel="6x6" itemValue="36" />
+                    </h:selectOneListbox>
+		</p>
+                <p>
+                    <h:commandButton action="whatever" value="#{msg.login_login}" />
+                </p>
+                <p>
+                    Sie haben noch keinen Benutzernamen?
+                    <h:outputLink value="register">Hier anmelden.</h:outputLink>
+                </p>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+
