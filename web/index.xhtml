@@ -10,10 +10,10 @@
             <ui:param name="pageTitle" value="#{msg.login_pagetitle}" />
             <ui:define name="navigation">
                 <li>
-                    <h:outputLink value="./">#{msg.navigation_backtolounge}</h:outputLink>
+                    <h:link outcome="index.xhtml">#{msg.navigation_backtolounge}</h:link>
                 </li>
                 <li>
-                    <h:outputLink value="./">#{msg.navigation_login}</h:outputLink>
+                    <h:link outcome="index.xhtml">#{msg.navigation_login}</h:link>
                 </li>
             </ui:define>
             <ui:define name="content">
@@ -37,11 +37,11 @@
                     </h:selectOneListbox>
 		</p>
                 <p>
-                    <h:commandButton action="whatever" value="#{msg.login_login}" />
+                    <h:commandButton action="/register.xhtml" value="#{msg.login_login}" />
                 </p>
                 <p>
                     Sie haben noch keinen Benutzernamen?
-                    <h:outputLink value="register">Hier anmelden.</h:outputLink>
+                    <h:link outcome="register.xhtml" value="Hier anmelden" />
                 </p>
             </ui:define>
         </ui:composition>
