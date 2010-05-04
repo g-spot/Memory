@@ -24,6 +24,13 @@ public class MemoryBean
         fileNames = memAPI.initFileNames(16);
         startDate = new Date();
     }
+    public MemoryBean(int cardCount)
+    {
+        MemServlet memAPI = new MemServlet();
+        cards = memAPI.initCards(cardCount);
+        fileNames = memAPI.initFileNames(cardCount);
+        startDate = new Date();
+    }
 
     private HashMap<String, Card> cards;
     private HashMap<String, String> fileNames;

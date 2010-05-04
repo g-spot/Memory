@@ -141,7 +141,7 @@ public class MemServlet extends HttpServlet implements IMemoryAPI
             Random r = new Random();
             int nextID,j;
             //Gesucht ist aber eine Zahl dich noch nicht als Key vorkommt
-            while(fileNames.containsKey(String.valueOf((nextID = (r.nextInt(16)) + 1))));
+            while(fileNames.containsKey(String.valueOf((nextID = (r.nextInt(cardCount)) + 1))));
             //Wenn die gefundene Zahl größer als die Hälte der Kartenanzahl ist
             if(i > (cardCount/2))
                 j = i - (cardCount/2); //nehmen wir sie als Zweite gleiche Karte
