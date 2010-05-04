@@ -7,14 +7,14 @@ package model;
 
 import java.util.HashMap;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ApplicationScoped;
 
 /**
  *
  * @author johanneskurz
  */
 @ManagedBean(name="GameBean")
-@RequestScoped
+@ApplicationScoped
 public class GameBean
 {
     private HashMap<String,UserBean> userList;
