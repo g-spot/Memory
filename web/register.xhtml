@@ -19,6 +19,10 @@
                 </li>
             </ui:define>
             <ui:define name="content">
+                
+                
+                <h:messages />
+                
                 <h:form id="form">
                     <h1>
                         <h:outputText value="#{msg.register_heading}"/>
@@ -29,15 +33,27 @@
                     </h2>
                     <p>
                         <label for="form:username">#{msg.register_username}</label>
-                        <h:inputText id="username" styleClass="labeledinput" />
+
+                        <h:inputText id="username" styleClass="labeledinput" required="true" requiredMessage="Username muss ausgefüllt werden!" >
+                            <f:validateLength minimum="3" maximum="8"/>
+                        </h:inputText>
+
                     </p>
                     <p>
                         <label for="form:password">#{msg.register_password}</label>
-                        <h:inputSecret id="password" styleClass="labeledinput" />
+
+                        <h:inputSecret id="password" styleClass="labeledinput" validator="passwordValidator" required="true" requiredMessage="Passwort muss ausgefüllt werden!">
+                            <f:validateLength minimum="3" maximum="8" />
+                        </h:inputSecret>
                     </p>
                     <p>
                         <label for="form:passwordproof">#{msg.register_passwordproof}</label>
-                        <h:inputSecret id="passwordproof" styleClass="labeledinput" />
+
+                        <h:inputSecret id="passwordproof" styleClass="labeledinput" validator="passwordValidator" required="true"  requiredMessage="Passwort muss ein zweites mal ausgefüllt werden!">
+                            <f:validateLength minimum="3" maximum="8"/>
+                            <!--<f:validator binding="RegisterController" />-->
+                        </h:inputSecret>
+                        
                     </p>
                     <p>
                         <label for="form:check_additional_information">Zusätzliche Daten angeben</label>
