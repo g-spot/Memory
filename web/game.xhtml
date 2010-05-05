@@ -17,8 +17,91 @@
                 </li>
             </ui:define>
             <ui:define name="content">
+<!--
+      <div id="right-box">
+        <h1 class="hidden">Table</h1>
+        <h2>Spielstand</h2>
+        <table id="score" summary="Die folgende Tabelle listet die Spielstaende auf!">
+          <tr>
+            <th>&nbsp;</th>
+            <th>Du</th>
+            <th>Gegner</th>
+          </tr>
+          <tr>
+            <th class="tablehead">Paare</th>
+            <td><%= memoryBean.getFoundPairs() %></td>
+            <td>n.a.</td></tr>
+          <tr>
+            <th class="tablehead">Versuche</th>
+            <td><%= memoryBean.getTrialCount() %></td>
+            <td>n.a.</td>
+          </tr>
+          <tr>
+            <th class="tablehead">Zeit</th>
+            <td><%= memoryBean.getCurrentTime() %></td>
+            <td>n.a.</td>
+          </tr>
+        </table>
+        <h2>Spielinformationen</h2>
+        <table id="gameinfo" summary="Die folgende Tabelle listet die Spielinformationen auf!">
+          <tr>
+            <th>Restliche Paare</th>
+            <td><%= memoryBean.getPairsLeft() %></td>
+          </tr>
+          <tr>
+            <th>Thema</th>
+            <td>Alternative Rock</td>
+          </tr>
+        </table>
+        <h2>Top-Künstler</h2>
+                                <ul id="favorites">
+                                    <li>
+                                        <a href="#"><img src="img/muse.jpg" alt="Bild der Alternative Band Muse" />&nbsp;Muse</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><img src="img/placebo.jpg" alt="Bild der Alternative Band Placebo" />&nbsp;Placebo</a>
+                                    </li>
+                                    <li>
+          <a href="#"><img src="img/radiohead.png" alt="Bild der Alternative Band Radiohead" />&nbsp;Radiohead</a>
+                                    </li>
+                                    <li>
+          <a href="#"><img src="img/incubus.jpeg" alt="Bild der Alternative Band Incubus" />&nbsp;Incubus</a>
+                                    </li>
+                                    <li>
+          <a href="#"><img src="img/foo_fighters.jpeg" alt="Bild der Alternative Band Foo Fighters" />&nbsp;Foo-Fighters</a>
+                                    </li>
+                                </ul>
+      </div>
+                    <div id="card-box">
+                        <form method="post" action="MemServlet">
+                            <table>
+                            <tr>
+                            <% for(int i=1;i<=16;i++) // TODO insert table size
+                               {
+                                 if(i > 1 && (i-1)%4 == 0)
+                                 {
+                            %>
+                            </tr>
+                            <tr>
+                            <%
+                                 }
+                            %>
+                                <td><input name="<%=i %>" type="image" src="<%= memoryBean.getCards().get(String.valueOf(i)).getFileName() %>" alt="Karte <%=i %>"/></td>
+                            <%
 
-                
+                               }
+                            %>
+                            </tr>
+                            </table>
+                        </form>
+
+
+                    </div>
+
+
+                    <div id="clear-divider"></div>
+    </div>
+-->
 
             </ui:define>
         </ui:composition>
