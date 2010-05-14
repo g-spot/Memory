@@ -18,12 +18,10 @@ public class UserBean {
 
     private String username;
     private String password;
-
-    private boolean additionalInfoGiven = false;
     private String firstname;
     private String lastname;
-    private Date dateofbirth;
-    private Sex sex;
+    private String dateofbirth;
+    private String sex;
 
     /** Creates a new instance of UserBean */
     public UserBean() {
@@ -58,20 +56,6 @@ public class UserBean {
     }
 
     /**
-     * @return the additionalInfo
-     */
-    public boolean isAdditionalInfoGiven() {
-        return additionalInfoGiven;
-    }
-
-    /**
-     * @param additionalInfo the additionalInfo to set
-     */
-    public void setAdditionalInfoGiven(boolean additionalInfoGiven) {
-        this.additionalInfoGiven = additionalInfoGiven;
-    }
-
-    /**
      * @return the firstname
      */
     public String getFirstname() {
@@ -102,28 +86,28 @@ public class UserBean {
     /**
      * @return the dateofbirth
      */
-    public Date getDateofbirth() {
+    public String getDateofbirth() {
         return dateofbirth;
     }
 
     /**
      * @param dateofbirth the dateofbirth to set
      */
-    public void setDateofbirth(Date dateofbirth) {
+    public void setDateofbirth(String dateofbirth) {
         this.dateofbirth = dateofbirth;
     }
 
     /**
      * @return the sex
      */
-    public Sex getSex() {
+    public String getSex() {
         return sex;
     }
 
     /**
      * @param sex the sex to set
      */
-    public void setSex(Sex sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 

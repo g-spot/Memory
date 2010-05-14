@@ -21,9 +21,6 @@
             </ui:define>
             <ui:define name="content">
                 
-                
-                <h:messages />
-                
                 <h:form>
                     <h1>
                         <h:outputText value="#{msg.register_heading}"/>
@@ -34,26 +31,29 @@
                     </h2>
                     <p>
                         <h:outputLabel for="username" value="#{msg.register_username}" />
-                        <h:inputText id="username" styleClass="labeledinput" required="true" requiredMessage="Username muss ausgefüllt werden!" >
+                        <h:inputText id="username" value="#{userBean.username}" styleClass="labeledinput" required="true" requiredMessage="Username muss ausgefüllt werden!" >
                             <f:validateLength minimum="3" maximum="8"/>
+                            <f:validateRegex pattern="[A-Za-z]*" />
                         </h:inputText>
-
+                        <p><em class="inputerror"><h:message for="username" /></em></p>
                     </p>
                     <p>
                         <h:outputLabel for="password" value="#{msg.register_password}" />
-                        <h:inputSecret binding="#{loginCtrl.passwordComponent}" id="password" styleClass="labeledinput" required="true" requiredMessage="#{msg.validate_passwordnotnull}">
+                        <h:inputSecret value="#{userBean.password}" binding="#{loginCtrl.passwordComponent}" id="password" styleClass="labeledinput" required="true" requiredMessage="#{msg.validate_passwordnotnull}">
                             <f:validateLength minimum="8" />
                         </h:inputSecret>
+                        <p><em class="inputerror"><h:message for="password" /></em></p>
                     </p>
                     <p>
                         <h:outputLabel for="passwordproof" value="#{msg.register_passwordproof}" />
                         <h:inputSecret validator="#{loginCtrl.validatePassword}" id="passwordproof" styleClass="labeledinput" required="true" requiredMessage="#{msg.validate_passwordproofnotnull}">
                             <f:validateLength minimum="8" />
                         </h:inputSecret>
+                        <p><em class="inputerror"><h:message for="passwordproof" /></em></p>
                     </p>
                     <p>
                         <label for="form:check_additional_information">Zusätzliche Daten angeben</label>
-                        <h:selectBooleanCheckbox id="check_additional_information" value="#{UserBean.additionalInfoGiven}" immediate="true">
+                        <h:selectBooleanCheckbox id="check_additional_information">
                         </h:selectBooleanCheckbox>
                     </p>
                     <h:panelGroup id="additional_information">
@@ -62,22 +62,27 @@
                         </h2>
                         <p>
                             <h:outputLabel for="firstname" value="#{msg.register_firstname}" />
-                            <h:inputText id="firstname" styleClass="labeledinput" rendered="#{UserBean.additionalInfoGiven == true}" />
+                            <h:inputText id="firstname" value="#{userBean.firstname}" styleClass="labeledinput" />
+                            <p><em class="inputerror"><h:message for="firstname" /></em></p>
                         </p>
                         <p>
                             <h:outputLabel for="lastname" value="#{msg.register_lastname}" />
-                            <h:inputText id="lastname" styleClass="labeledinput" />
+                            <h:inputText id="lastname" value="#{userBean.lastname}" styleClass="labeledinput" />
+                            <p><em class="inputerror"><h:message for="lastname" /></em></p>
                         </p>
                         <p>
                             <h:outputLabel for="dateofbirth" value="#{msg.register_dateofbirth}" />
-                            <h:inputText id="dateofbirth" styleClass="labeledinput" />
+                            <h:inputText validator="#{loginCtrl.validateDateOfBirth}" id="dateofbirth" value="#{userBean.dateofbirth}" required="false" styleClass="labeledinput">
+                            </h:inputText>
+                            <p><em class="inputerror"><h:message for="dateofbirth" /></em></p>
                         </p>
                         <p>
                             <h:outputLabel for="sex" value="#{msg.register_sex}" />
-                            <h:selectOneListbox id="sex" size="1" styleClass="labeledinput">
-                                <f:selectItem itemLabel="#{msg.register_sex_male}" itemValue="0" />
-                                <f:selectItem itemLabel="#{msg.register_sex_female}" itemValue="1" />
+                            <h:selectOneListbox id="sex" value="#{userBean.sex}" size="1" styleClass="labeledinput">
+                                <f:selectItem itemLabel="#{msg.register_sex_male}" itemValue="male" />
+                                <f:selectItem itemLabel="#{msg.register_sex_female}" itemValue="female" />
                             </h:selectOneListbox>
+                            <p><em class="inputerror"><h:message for="sex" /></em></p>
                         </p>
                     </h:panelGroup>
                     <p>

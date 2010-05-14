@@ -88,6 +88,10 @@ h3 {
         width:140px;
 }
 
+.inputerror {
+    color:red;
+}
+
 p {
 	margin-left:1em;
 }

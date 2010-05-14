@@ -5,8 +5,11 @@
 
 package controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import java.util.Random;
+import java.util.TimeZone;
 import javax.faces.validator.ValidatorException;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
@@ -130,14 +133,22 @@ public class LoginCtrl {
     }
 
     //Validation of the username - UserList auslesen ob User vorhanden mit Password .. wenn nein -> Meldung
-    public void validateBirthday(FacesContext ctx, UIComponent component, Object value) throws ValidatorException
+    public void validateDateOfBirth(FacesContext ctx, UIComponent component, Object value) throws ValidatorException
     {
-        String username = (String)value;
+        String birthday = (String)value;
 
-        if(!username.equals("Markus") && !username.equals("Heidi"))
+        if(birthday == null || birthday.isEmpty())
+            return;
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        try
+        {
+            formatter.parse(birthday);
+        }
+        catch(Exception e)
         {
             FacesMessage msg = new FacesMessage(
-            FacesMessage.SEVERITY_WARN,"Wrong username!", null);
+            FacesMessage.SEVERITY_WARN, Util.getMessage(ctx, "validate_dateofbirthnotvalid"), null);
             throw new ValidatorException(msg);
         }
     }
