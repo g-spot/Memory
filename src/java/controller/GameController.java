@@ -58,11 +58,10 @@ public class GameController //implements Serializable
             }  
         }
 
-
-
         
         for(int i=0;i<row;i++)
         {
+            shuffle(cols[i]);
             dynamicList.add(Arrays.asList(cols[i]));
         }
 
@@ -71,7 +70,6 @@ public class GameController //implements Serializable
         {
             Collections.shuffle(dynamicList);
             Collections.shuffle(dynamicList.get(i));
-
         }
         
         System.out.println("Fertige Liste:" + dynamicList);
@@ -108,7 +106,7 @@ public class GameController //implements Serializable
                 // Create <h:outputText value="#{dynamicItem[" + i + "]}"> for the body of column.
                 HtmlCommandButton output = new HtmlCommandButton();
                 output.setAlt("Card");
-                output.setImage("img/card_images/" + dynamicList.get(j).get(i));
+                output.setImage("resources/img/card_images/" + dynamicList.get(j).get(i));
                 column.getChildren().add(output);
             }
                     dynamicDataTableGroup.getChildren().add(dynamicDataTable);
@@ -144,5 +142,20 @@ public class GameController //implements Serializable
         this.dynamicDataTableGroup = dynamicDataTableGroup;
     }
 
+    private void exch(String[] a, int i, int j)
+    {
+        String swap = a[i];
+        a[i] = a[j];
+        a[j] = swap;
+    }
+
+    // take as input an array of strings and rearrange them in random order
+    private void shuffle(String[] a) {
+        int N = a.length;
+        for (int i = 0; i < N; i++) {
+            int r = i + (int) (Math.random() * (N-i));   // between i and N-1
+            exch(a, i, r);
+        }
+    }
 
 }
