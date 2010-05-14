@@ -17,6 +17,20 @@
                 </li>
             </ui:define>
             <ui:define name="content">
+                <div id="right-box">
+                    
+                    <!--<h:commandLink> 
+                        <h:outputText value="#{msgs.linkText}"/> 
+                        <h:graphicImage value="/registration.jpg"/> 
+                    </h:commandLink> -->
+                    
+                </div>
+                <div id="card-box">
+                    <h:panelGroup binding="#{GameController.dynamicDataTableGroup}" />
+
+                </div>
+
+                <div id="clear-divider"></div>
 <!--
       <div id="right-box">
         <h1 class="hidden">Table</h1>
