@@ -18,12 +18,6 @@
         </resource-bundle>
     </application>
 
-    <validator>
-        <validator-id>passwordValidator</validator-id>
-        <validator-class>controller.RegisterController</validator-class>
-    </validator>
-
-
     <managed-bean>
         <managed-bean-name>UserBean</managed-bean-name>
         <managed-bean-class>model.UserBean</managed-bean-class>
