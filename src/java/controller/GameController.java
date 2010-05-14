@@ -4,6 +4,7 @@ package controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
@@ -27,68 +28,94 @@ import javax.faces.event.ActionEvent;
 @ManagedBean(name="GameController")
 @SessionScoped
 
-public class GameController implements Serializable
+public class GameController //implements Serializable
 {
 
-    private static ArrayList<List<String>> dynamicList; // Simulate fake DB.
+    private static List<List<String>> dynamicList; // Simulate fake DB.
     //private static String[] dynamicHeaders; // Optional.
     private HtmlPanelGroup dynamicDataTableGroup; // Placeholder.
 
     // Actions -----------------------------------------------------------------------------------
 
-    private void loadDynamicList()
+    private void loadDynamicList(int col, int row)
     {
-
-        // Set headers (optional).
-       // dynamicHeaders = new String[] {"ID", "Name", "Value"};
-
-        // Set rows. This is a stub example, just do your dynamic thing.
         dynamicList = new ArrayList<List<String>>();
-        dynamicList.add(Arrays.asList(new String[] { "ID1", "Name1", "Value1" }));
-        dynamicList.add(Arrays.asList(new String[] { "ID2", "Name2", "Value2" }));
-        dynamicList.add(Arrays.asList(new String[] { "ID3", "Name3", "Value3" }));
-        //dynamicList.add(Arrays.asList(new String[] { "ID4", "Name4", "Value4" }));
-        //dynamicList.add(Arrays.asList(new String[] { "ID5", "Name5", "Value5" }));
+        String[][] cols = new String[row][col];
+        for(int i = 0; i < row ; i++)
+        {
+            for(int j=1;  j <= col ; j++)
+            {
+                if((j+(row*i)) <= (col*row)/2)
+                {
+                    cols[i][j-1] = "card"+(j+((row)*i))+".jpg";
+                    System.out.println("card"+(j+((row)*i))+".jpg");
+                }
+                else
+                {
+                    cols[i][j-1] = "card"+(j+((row)*i)-8)+".jpg";
+                    System.out.println("card"+(j+((row)*i)-8)+".jpg");
+                }
+            }  
+        }
+
+
+
+        
+        for(int i=0;i<row;i++)
+        {
+            dynamicList.add(Arrays.asList(cols[i]));
+        }
+
+        
+        for(int i=0; i< dynamicList.size();i++)
+        {
+            Collections.shuffle(dynamicList);
+            Collections.shuffle(dynamicList.get(i));
+
+        }
+        
+        System.out.println("Fertige Liste:" + dynamicList);
+        
 
     }
 
     private void populateDynamicDataTable()
     {
         ExpressionFactory ef = ExpressionFactory.newInstance();
-
-        // Create <h:dataTable value="#{myBean.dynamicList}" var="dynamicItem">.
-        HtmlDataTable dynamicDataTable = new HtmlDataTable();
-        dynamicDataTable.setValueExpression("value", 
-                ef.createValueExpression(GameController.dynamicList, List.class) );
-        dynamicDataTable.setVar("dynamicItem");
-
+        dynamicDataTableGroup = new HtmlPanelGroup();
+        HtmlDataTable dynamicDataTable;
 
         // Iterate over columns.
-        for (int i = 0; i < dynamicList.get(0).size(); i++)
+        for(int j =0; j< dynamicList.size(); j++)
         {
+            dynamicDataTable = new HtmlDataTable();
+            dynamicDataTable.setValueExpression("value", ef.createValueExpression("1", String.class));
+            dynamicDataTable.setVar("dynamicItem");
+            
+            for (int i = 0; i < dynamicList.get(j).size(); i++)
+            {
 
-            // Create <h:column>.
-            HtmlColumn column = new HtmlColumn();
-            dynamicDataTable.getChildren().add(column);
 
-            // Create <h:outputText value="dynamicHeaders[i]"> for <f:facet name="header"> of column.
-            //HtmlOutputText header = new HtmlOutputText();
-            //header.setValue(dynamicHeaders[i]);
-            //column.setHeader(header);
+                // Create <h:column>.
+                HtmlColumn column = new HtmlColumn();
+                dynamicDataTable.getChildren().add(column);
 
-            // Create <h:outputText value="#{dynamicItem[" + i + "]}"> for the body of column.
+                // Create <h:outputText value="dynamicHeaders[i]"> for <f:facet name="header"> of column.
+                /*HtmlOutputText header = new HtmlOutputText();
+                header.setValue("Header");
+                column.setHeader(header);*/
 
-            HtmlCommandButton output = new HtmlCommandButton();
-            int j = i+1;
-            output.setImage("img/card_images/card"+j+".jpg");
-
-            //output.setValueExpression("value",ef.createValueExpression("#{dynamicItem[" + i + "]}", String.class));
-            column.getChildren().add(output);
+                // Create <h:outputText value="#{dynamicItem[" + i + "]}"> for the body of column.
+                HtmlCommandButton output = new HtmlCommandButton();
+                output.setAlt("Card");
+                output.setImage("img/card_images/" + dynamicList.get(j).get(i));
+                column.getChildren().add(output);
+            }
+                    dynamicDataTableGroup.getChildren().add(dynamicDataTable);
         }
-
         // Add the datatable to <h:panelGroup binding="#{myBean.dynamicDataTableGroup}">.
-        dynamicDataTableGroup = new HtmlPanelGroup();
-        dynamicDataTableGroup.getChildren().add(dynamicDataTable);
+
+
     }
 
     // Getters -----------------------------------------------------------------------------------
@@ -98,7 +125,7 @@ public class GameController implements Serializable
         // This will be called once in the first RESTORE VIEW phase.
         if (dynamicDataTableGroup == null)
         {
-            loadDynamicList(); // Preload dynamic list.
+            loadDynamicList(4,4); // Preload dynamic list.
             populateDynamicDataTable(); // Populate editable datatable.
         }
 
