@@ -17,16 +17,17 @@
                 </li>
             </ui:define>
             <ui:define name="content">
+                <h:form>
                 <h1>
                     <h:outputText value="#{msg.login_heading}"/>
                 </h1>
 		<p>
                     <label for="username">#{msg.login_username}</label>
-                    <h:inputText id="username" styleClass="labeledinput" />
+                    <h:inputText id="username" value="#{loginCtrl.username}" styleClass="labeledinput" />
 		</p>
 		<p>
                     <label for="password">#{msg.login_password}</label>
-                    <h:inputSecret id="password" styleClass="labeledinput" />
+                    <h:inputSecret id="password" value="#{loginCtrl.password}" styleClass="labeledinput" />
 		</p>
 		<p>
                     <label for="stacksize">#{msg.login_stacksize}</label>
@@ -37,11 +38,13 @@
                     </h:selectOneListbox>
 		</p>
                 <p>
-                    <h:commandButton action="/register.xhtml" value="#{msg.login_login}" />
+                    <h:commandButton action="#{loginCtrl.login}" value="#{msg.login_login}" />
                 </p>
+                </h:form>
                 <p>
                     Sie haben noch keinen Benutzernamen?
-                    <h:link outcome="game.xhtml" value="Hier anmelden" />
+                    <h:link outcome="game.xhtml" value="Gleich zum Game " />
+                    <h:link outcome="register.xhtml" value="Hier anmelden" />
                 </p>
             </ui:define>
         </ui:composition>

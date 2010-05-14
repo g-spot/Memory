@@ -5,8 +5,10 @@
 
 package controller;
 
+import java.text.SimpleDateFormat;
 import javax.faces.bean.ManagedBean;
 import java.util.Random;
+import java.util.Set;
 import javax.faces.validator.ValidatorException;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
@@ -14,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIInput;
 import javax.faces.event.ValueChangeEvent;
+import model.GameBean;
 import model.UserBean;
 import util.Util;
 
@@ -31,7 +34,8 @@ public class LoginCtrl {
 
     private boolean loginfailed;
     private boolean showPersonalDetails;
-    private UserBean user;
+    private String username;
+    private String password;
 
     private UIInput passwordComponent;
 
@@ -72,17 +76,25 @@ public class LoginCtrl {
     //Login - check password
     public String login()
     {
-        if(user.getPassword().equals("secret"))
-        {
-            loginfailed = false;
-            return "/table.xhtml";
-        }
+        if(getGameBean() == null)
+            return "/register_failure.xhtml";
 
-        else
-        {
-            loginfailed = true;
-            return "/login.xhtml";
-        }
+        UserBean userBean = null;
+        if((userBean = getGameBean().getUserList().get(getUsername())) == null)
+            return "/login_failure.xhtml";
+        if(!userBean.getPassword().equals(getPassword()))
+            return "/login_failure.xhtml";
+        return "/game.xhtml";
+    }
+
+    public Object register()
+    {
+        UserBean userBean = getUserBean();
+        GameBean gameBean = getGameBean();
+        if(userBean == null || gameBean == null)
+            return "/register_failure.xhtml";
+        gameBean.getUserList().put(userBean.getUsername(), userBean);
+        return "/register_success.xhtml";
     }
 
     //Checks if "Show details" checkbox is checked
@@ -99,10 +111,12 @@ public class LoginCtrl {
     {
         String username = (String)value;
 
-        if(!username.equals("Markus") && !username.equals("Heidi"))
+        System.out.println("yeaaahh");
+
+        if(getGameBean().getUserList().containsKey(username))
         {
             FacesMessage msg = new FacesMessage(
-            FacesMessage.SEVERITY_WARN,"Wrong username!", null);
+            FacesMessage.SEVERITY_WARN,"User " + username + " existiert bereits", null);
             throw new ValidatorException(msg);
         }
     }
@@ -130,26 +144,22 @@ public class LoginCtrl {
     }
 
     //Validation of the username - UserList auslesen ob User vorhanden mit Password .. wenn nein -> Meldung
-    public void validateBirthday(FacesContext ctx, UIComponent component, Object value) throws ValidatorException
+    public void validateDateOfBirth(FacesContext ctx, UIComponent component, Object value) throws ValidatorException
     {
-        String username = (String)value;
+        String birthday = (String)value;
 
-        if(!username.equals("Markus") && !username.equals("Heidi"))
+        if(birthday == null || birthday.isEmpty())
+            return;
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        try
+        {
+            formatter.parse(birthday);
+        }
+        catch(Exception e)
         {
             FacesMessage msg = new FacesMessage(
-            FacesMessage.SEVERITY_WARN,"Wrong username!", null);
-            throw new ValidatorException(msg);
-        }
-    }
-
-    //Validation of the password, 8 chars, at least 1 char and 1 digit
-    public void validatePassWord(FacesContext ctx, UIComponent component, Object value) throws ValidatorException
-    {
-        String password = (String)value;
-
-        if(!stringCharIntControl(password)){
-            FacesMessage msg = new FacesMessage(
-            FacesMessage.SEVERITY_WARN,"Passwort nicht gueltig, mind. ein Buchstabe und 1 Zahl", null);
+            FacesMessage.SEVERITY_WARN, Util.getMessage(ctx, "validate_dateofbirthnotvalid"), null);
             throw new ValidatorException(msg);
         }
     }
@@ -180,5 +190,51 @@ public class LoginCtrl {
         {
             return false;
         }
+    }
+
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private GameBean getGameBean()
+    {
+        GameBean gameBean = (GameBean)FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("gameBean");
+
+        if(gameBean == null)
+        {
+            System.out.println("gameBean IS NULL THERFORE CREATING IT MOTHERFUCKERS");
+            gameBean = new GameBean();
+            FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("gameBean", gameBean);
+        }
+        return gameBean;
+    }
+
+    private UserBean getUserBean()
+    {
+        return (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userBean");
     }
 }
