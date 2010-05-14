@@ -31,7 +31,7 @@
                     </h2>
                     <p>
                         <h:outputLabel for="username" value="#{msg.register_username}" />
-                        <h:inputText id="username" value="#{userBean.username}" styleClass="labeledinput" required="true" requiredMessage="Username muss ausgefüllt werden!" >
+                        <h:inputText validator="#{loginCtrl.validateUsername}" id="username" value="#{userBean.username}" styleClass="labeledinput" required="true" requiredMessage="Username muss ausgefüllt werden!" >
                             <f:validateLength minimum="3" maximum="8"/>
                             <f:validateRegex pattern="[A-Za-z]*" />
                         </h:inputText>
@@ -86,7 +86,7 @@
                         </p>
                     </h:panelGroup>
                     <p>
-                        <h:commandButton action="/register.xhtml" value="#{msg.register_register}" />
+                        <h:commandButton action="#{loginCtrl.register}" value="#{msg.register_register}" />
                     </p>
                 </h:form>
             </ui:define>
