@@ -49,29 +49,6 @@ public class LoginCtrl {
         this.passwordComponent = passwordComponent;
     }
 
-    //Getter and Setter
-   
-    public boolean isLoginfailed() {
-        return loginfailed;
-    }
-
-    public void setLoginfailed(boolean loginfailed) {
-        this.loginfailed = loginfailed;
-    }
-
-    public boolean isDisplayonline() {
-        return showPersonalDetails;
-    }
-
-    public void setDisplayonline(boolean showPersonalDetails) {
-        this.showPersonalDetails = showPersonalDetails;
-    }
-
-
-    public int getOnlineCustomers()
-    {
-        return new Random().nextInt(10) + 1;
-    }
 
     //Login - check password
     public String login()
@@ -98,10 +75,10 @@ public class LoginCtrl {
     }
 
     //Checks if "Show details" checkbox is checked
-    public void displayChanged(ValueChangeEvent e){
+    public void showPersonalDetailsChanged(ValueChangeEvent e){
         Boolean show = (Boolean) e.getNewValue();
         if(show != null)
-            showPersonalDetails = show;
+            setShowPersonalDetails((boolean) show);
 
         FacesContext.getCurrentInstance().renderResponse();
     }
@@ -236,5 +213,19 @@ public class LoginCtrl {
     private UserBean getUserBean()
     {
         return (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userBean");
+    }
+
+    /**
+     * @return the showPersonalDetails
+     */
+    public boolean isShowPersonalDetails() {
+        return showPersonalDetails;
+    }
+
+    /**
+     * @param showPersonalDetails the showPersonalDetails to set
+     */
+    public void setShowPersonalDetails(boolean showPersonalDetails) {
+        this.showPersonalDetails = showPersonalDetails;
     }
 }

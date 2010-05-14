@@ -19,13 +19,13 @@
             <ui:define name="content">
                 <h:form>
                     <h1>
-                        <h:outputText value="Fehler bei der Anmeldung"/>
+                        <h:outputText value="#{msg.login_failure_failure}"/>
                     </h1>
                     <p>
-                        <h:outputText value="Falscher Benutzername oder Password" />
+                        <h:outputText value="#{msg.login_failure_wronguser}" />
                     </p>
                     <p>
-                        <h:commandButton action="/index.xhtml" value="Zurück" />
+                        <h:commandButton action="/index.xhtml" value="#{msg.back}" />
                     </p>
                 </h:form>
             </ui:define>

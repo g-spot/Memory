@@ -53,10 +53,15 @@
                     </p>
                     <p>
                         <label for="form:check_additional_information">Zusätzliche Daten angeben</label>
-                        <h:selectBooleanCheckbox id="check_additional_information">
+                        <h:selectBooleanCheckbox id="check_additional_information"
+                                                 onclick="this.form.submit()"
+                                                 value="#{loginCtrl.showPersonalDetails}"
+                                                 immediate="true"
+                                                 valueChangeListener="#{loginCtrl.showPersonalDetailsChanged}">
                         </h:selectBooleanCheckbox>
                     </p>
-                    <h:panelGroup id="additional_information">
+            
+                    <h:panelGroup id="additional_information" rendered="#{loginCtrl.showPersonalDetails}">
                         <h2>
                             <h:outputText value="#{msg.register_personaldata}" />
                         </h2>

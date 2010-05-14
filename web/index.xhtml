@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:mc="http://java.sun.com/jsf/composite/mycomponents">
     <h:body>
 
         <ui:composition template="./pageTemplate.xhtml">
@@ -17,34 +18,14 @@
                 </li>
             </ui:define>
             <ui:define name="content">
-                <h:form>
-                <h1>
-                    <h:outputText value="#{msg.login_heading}"/>
-                </h1>
-		<p>
-                    <label for="username">#{msg.login_username}</label>
-                    <h:inputText id="username" value="#{loginCtrl.username}" styleClass="labeledinput" />
-		</p>
-		<p>
-                    <label for="password">#{msg.login_password}</label>
-                    <h:inputSecret id="password" value="#{loginCtrl.password}" styleClass="labeledinput" />
-		</p>
-		<p>
-                    <label for="stacksize">#{msg.login_stacksize}</label>
-                    <h:selectOneListbox id="stacksize" size="1" styleClass="labeledinput">
-                        <f:selectItem itemLabel="2x2" itemValue="4" />
-                        <f:selectItem itemLabel="4x4" itemValue="16" />
-                        <f:selectItem itemLabel="6x6" itemValue="36" />
-                    </h:selectOneListbox>
-		</p>
+                <mc:login />
                 <p>
-                    <h:commandButton action="#{loginCtrl.login}" value="#{msg.login_login}" />
+                    <h:outputText value="#{msg.login_nousername}" />
+                    <h:link outcome="register.xhtml" value="#{msg.login_registerhere}" />
                 </p>
-                </h:form>
                 <p>
-                    Sie haben noch keinen Benutzernamen?
+
                     <h:link outcome="game.xhtml" value="Gleich zum Game " />
-                    <h:link outcome="register.xhtml" value="Hier anmelden" />
                 </p>
             </ui:define>
         </ui:composition>
