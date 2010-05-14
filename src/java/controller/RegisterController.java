@@ -21,7 +21,8 @@ public class RegisterController implements javax.faces.validator.Validator
 
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException
     {
-        if(component.getId().equals("passwordproof"))
+        System.out.println("IHR SEID MIR ALLE WURSCHT");
+        if(component.getId().equals("password_component"))
         {
             if(value.equals("irgendwas"))
             {
