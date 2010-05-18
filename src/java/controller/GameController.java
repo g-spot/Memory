@@ -35,7 +35,7 @@ import javax.faces.event.ActionListener;
 @ManagedBean(name="GameController")
 @SessionScoped
 
-public class GameController implements Serializable
+public class GameController // implements Serializable
 {
 
     private static List<List<String>> dynamicList; // Simulate fake DB.
@@ -99,7 +99,7 @@ public class GameController implements Serializable
         ExpressionFactory factory = app.getExpressionFactory();
 
 
-        MethodExpression me = factory.createMethodExpression(ec,"#{GameController.cardClicked}", Void.TYPE, new Class<?>[0]);
+        // MethodExpression me = factory.createMethodExpression(ec,"/game.xhtml", Void.TYPE, new Class<?>[0]);
 
 
 
@@ -131,40 +131,14 @@ public class GameController implements Serializable
                 output.setAlt("Card"+j+"_"+i);
                 output.setImmediate(true);
                 //output.setActionExpression(me);
-                output.addActionListener(new ActionListener()
-                {
+                ActionListener al = new TestActionListener();
+                output.addActionListener(al);
 
-                    public void processAction(ActionEvent event) throws AbortProcessingException
-                    {
-                        UIComponent uc = event.getComponent();
-                        HtmlCommandButton output = (HtmlCommandButton)uc;
-
-                        String alt = output.getAlt();
-                        alt.replace("Card", "");
-
-                        //Debug
-                        System.out.println(alt);
-
-                        String [] coords = alt.split("[_]");
-
-                        //DEBUG
-                        System.out.println("FUCK COORDS " + coords[0] + " " +coords[1]);
-
-                        output.setImage("resources/img/card_images/"
-                                        +(dynamicList.get(Integer.parseInt(coords[0]))).get(Integer.parseInt(coords[1]) )
-                                       );
-
-                        //TODO: CLICKED HANDLING
-
-                        FacesContext.getCurrentInstance().renderResponse();
-                    }
-                }
-                );
-                
+                //output.setActionExpression(me);
 
                 column.getChildren().add(output);
             }
-                    dynamicDataTableGroup.getChildren().add(dynamicDataTable);
+                dynamicDataTableGroup.getChildren().add(dynamicDataTable);
         }
         // Add the datatable to <h:panelGroup binding="#{myBean.dynamicDataTableGroup}">.
 
@@ -191,7 +165,7 @@ public class GameController implements Serializable
         return dynamicDataTableGroup;
     }
 
-    public List<List<String>> getDynamicList()
+    public static List<List<String>> getDynamicList()
     {
         return dynamicList;
     }
