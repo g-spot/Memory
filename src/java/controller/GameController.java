@@ -4,6 +4,7 @@ package controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.el.ELContext;
@@ -18,6 +19,7 @@ import javax.faces.application.Application;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.behavior.AjaxBehavior;
 import javax.faces.component.html.HtmlColumn;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.component.html.HtmlOutputText;
@@ -126,17 +128,23 @@ public class GameController // implements Serializable
 
                 output.setImage(FILENAME_BACKGROUND);
                 output.setAlt("Card"+j+"_"+i);
-                output.setImmediate(true);
-                
-                javax.faces.component.behavior.AjaxBehavior ajax = new javax.faces.component.behavior.AjaxBehavior();
-                ajax.addAjaxBehaviorListener(new CardActionListener());
-                output.addClientBehavior("click", ajax);
-                
-                //output.setValueExpression("ajax",ef.createValueExpression("true", String.class) );
+                //output.setImmediate(true);
                 /*
+                //AJAX PART
+                AjaxBehavior ajax = new AjaxBehavior();
+
+                ajax.addAjaxBehaviorListener(new CardActionListener());
+
+                output.addClientBehavior("click", ajax);
+
+                //AJAX PART ENDE
+             
+                
+
+                */
                 ActionListener al = new CardActionListener();
                 output.addActionListener(al);
-                */
+                
 
                 column.getChildren().add(output);
             }
@@ -169,7 +177,7 @@ public class GameController // implements Serializable
                 cardBean.setCard2(hcb);
 
                 //count erhöhen
-                //memoryBean.setTrialCount(memoryBean.getTrialCount() + 1);
+                cardBean.setTrialCount(cardBean.getTrialCount() + 1);
 
                 // found Pairs erhöhen
                 if(cardBean.getCard2().getImage().equals(cardBean.getCard1().getImage()))

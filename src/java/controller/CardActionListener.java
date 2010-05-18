@@ -5,6 +5,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlCommandButton;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
@@ -14,12 +15,9 @@ import javax.faces.event.AjaxBehaviorListener;
 @ManagedBean(name="CardActionListener")
 @RequestScoped
 
-public class CardActionListener implements AjaxBehaviorListener
+public class CardActionListener implements AjaxBehaviorListener,ActionListener
 {
-    /*
-    public CardActionListener()
-    {
-    }
+    
 
     public void processAction(ActionEvent event) throws AbortProcessingException
     {
@@ -50,7 +48,7 @@ public class CardActionListener implements AjaxBehaviorListener
             GameController.cardClicked(output);
         }
     }
-*/
+
     public void processAjaxBehavior(AjaxBehaviorEvent event) throws AbortProcessingException
     {
         System.out.println("Test Action Listener called..");
@@ -79,6 +77,7 @@ public class CardActionListener implements AjaxBehaviorListener
             
 
             GameController.cardClicked(output);
+
         }
     }
 }

@@ -36,7 +36,8 @@ public class CardBean
 
     public CardBean(int cardCount)
     {
-
+        startDate = new Date();
+        cards = cardCount;
     }
 
     public HtmlCommandButton getCard1()
