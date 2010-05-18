@@ -49,10 +49,13 @@ public class GameController // implements Serializable
 
     private final static String FILENAME_BACKGROUND = "resources/img/card_background.png";
 
+    private String stackSize="16";
 
-
-    private void loadDynamicList(int col, int row)
+    private void loadDynamicList(int cards)
     {
+        int col = (int) Math.sqrt(cards);
+        int row = (int) Math.sqrt(cards);
+        
         dynamicList = new ArrayList<List<String>>();
         String[][] cols = new String[row][col];
 
@@ -66,19 +69,18 @@ public class GameController // implements Serializable
             FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("cardBean", cardBean);
         }
 
-
         for(int i = 0; i < row ; i++)
         {
             for(int j=1;  j <= col ; j++)
             {
-                if((j+(row*i)) <= (col*row)/2)
+                if((j+(row*i)) <= (cards)/2)
                 {
                     cols[i][j-1] = "card"+(j+((row)*i))+".jpg";
                     //System.out.println("card"+(j+((row)*i))+".jpg");
                 }
                 else
                 {
-                    cols[i][j-1] = "card"+(j+((row)*i)-8)+".jpg";
+                    cols[i][j-1] = "card"+(j+((row)*i)-(cards/2))+".jpg";
                     //System.out.println("card"+(j+((row)*i)-8)+".jpg");
                 }
             }  
@@ -221,7 +223,8 @@ public class GameController // implements Serializable
         // This will be called once in the first RESTORE VIEW phase.
         if (dynamicDataTableGroup == null)
         {
-            loadDynamicList(4,4); // Preload dynamic list.
+            System.out.println("Stacksize: "+getStackSize());
+            loadDynamicList(Integer.parseInt(getStackSize())); // Preload dynamic list.
             populateDynamicDataTable(); // Populate editable datatable.
         }
 
@@ -256,4 +259,17 @@ public class GameController // implements Serializable
         }
     }
 
+    /**
+     * @return the stackSize
+     */
+    public String getStackSize() {
+        return stackSize;
+    }
+
+    /**
+     * @param stackSize the stackSize to set
+     */
+    public void setStackSize(String stackSize) {
+        this.stackSize = stackSize;
+    }
 }

@@ -37,6 +37,7 @@ public class LoginCtrl {
     private String username;
     private String password;
 
+
     private UIInput passwordComponent;
 
     public UIInput getPasswordComponent()
@@ -203,7 +204,7 @@ public class LoginCtrl {
 
         if(gameBean == null)
         {
-            System.out.println("gameBean IS NULL THERFORE CREATING IT MOTHERFUCKERS");
+            
             gameBean = new GameBean();
             FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("gameBean", gameBean);
         }
@@ -228,4 +229,5 @@ public class LoginCtrl {
     public void setShowPersonalDetails(boolean showPersonalDetails) {
         this.showPersonalDetails = showPersonalDetails;
     }
+
 }
