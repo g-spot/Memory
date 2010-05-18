@@ -26,9 +26,9 @@ public class CardActionListener implements AjaxBehaviorListener,ActionListener
 
     public void processAction(ActionEvent event) throws AbortProcessingException
     {
-        System.out.println("Test Action Listener called..");
+        //System.out.println("Test Action Listener called..");
         UIComponent source = event.getComponent();
-        System.out.println("Source of the Event is " + source.getClass().getName());
+        //System.out.println("Source of the Event is " + source.getClass().getName());
 
 
         HtmlCommandButton output = (HtmlCommandButton)source;
@@ -38,13 +38,9 @@ public class CardActionListener implements AjaxBehaviorListener,ActionListener
             String alt = output.getAlt();
             alt = alt.replace("Card", "");
 
-            //Debug
-            System.out.println("alter "+alt);
 
             String [] coords = alt.split("[_]");
 
-            //DEBUG
-            System.out.println("FUCK COORDS " + coords[0] + " " + coords[1] );
 
             output.setImage("resources/img/card_images/"
                             +(GameController.getDynamicList().get(Integer.parseInt(coords[0]))).get(Integer.parseInt(coords[1]) )
@@ -55,7 +51,8 @@ public class CardActionListener implements AjaxBehaviorListener,ActionListener
 
             if(cardBean.getFoundPairs() >= (cardBean.getCards() / 2))
             {
-                try {
+                try
+                {
                     FacesContext.getCurrentInstance().getExternalContext().dispatch("/game_success.xhtml");
                 } catch (IOException ex)
                 {
@@ -68,9 +65,9 @@ public class CardActionListener implements AjaxBehaviorListener,ActionListener
 
     public void processAjaxBehavior(AjaxBehaviorEvent event) throws AbortProcessingException
     {
-        System.out.println("Test Action Listener called..");
+        //System.out.println("Test Action Listener called..");
         UIComponent source = event.getComponent();
-        System.out.println("Source of the Event is " + source.getClass().getName());
+        //System.out.println("Source of the Event is " + source.getClass().getName());
 
 
         HtmlCommandButton output = (HtmlCommandButton)source;
@@ -80,13 +77,7 @@ public class CardActionListener implements AjaxBehaviorListener,ActionListener
             String alt = output.getAlt();
             alt = alt.replace("Card", "");
 
-            //Debug
-            System.out.println("alter "+alt);
-
             String [] coords = alt.split("[_]");
-
-            //DEBUG
-            System.out.println("FUCK COORDS " + coords[0] + " " + coords[1] );
 
             output.setImage("resources/img/card_images/"
                             +(GameController.getDynamicList().get(Integer.parseInt(coords[0]))).get(Integer.parseInt(coords[1]) )
@@ -96,7 +87,6 @@ public class CardActionListener implements AjaxBehaviorListener,ActionListener
             GameController.cardClicked(output);
             CardBean cardBean = (CardBean)FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("cardBean");
 
-            //Outcome
 
         }
     }

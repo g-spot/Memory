@@ -20,6 +20,7 @@
                 <div id="right-box">
                 <h1 class="hidden">#{msg.rb_hidden}</h1>
                     <h2>#{msg.rb_currentScore}</h2>
+		  <f:ajax render="@this" event="mousemove">
                     <h:form id="scoring">
                         <table id="score" summary="#{msg.rb_summary_tableScore}">
                         <tr>
@@ -54,6 +55,7 @@
                         </tr>
                     </table>
                     </h:form>
+					</f:ajax>
                     <h2>#{msg.rb_topActs}</h2>
                         <ul id="favorites">
                                 <li>
@@ -99,9 +101,11 @@
                 </div>
 
                 <div id="card-box">
+                    <f:ajax render="@this" event="click">
                     <h:form>
                         <h:panelGroup binding="#{GameController.dynamicDataTableGroup}" />
                     </h:form>
+                    </f:ajax>
                 </div>
 
                 <div id="clear-divider"></div>

@@ -20,7 +20,7 @@
                 </li>
             </ui:define>
             <ui:define name="content">
-                
+
                 <h:form>
                     <h1>
                         <h:outputText value="#{msg.register_heading}"/>
@@ -52,7 +52,7 @@
                         <p><em class="inputerror"><h:message for="passwordproof" /></em></p>
                     </p>
                     <p>
-                        <label for="form:check_additional_information">Zusätzliche Daten angeben</label>
+                        <label for="form:check_additional_information">#{msg.register_check_additional_information}</label>
                         <h:selectBooleanCheckbox id="check_additional_information"
                                                  onclick="this.form.submit()"
                                                  value="#{loginCtrl.showPersonalDetails}"
@@ -60,7 +60,7 @@
                                                  valueChangeListener="#{loginCtrl.showPersonalDetailsChanged}">
                         </h:selectBooleanCheckbox>
                     </p>
-            
+
                     <h:panelGroup id="additional_information" rendered="#{loginCtrl.showPersonalDetails}">
                         <h2>
                             <h:outputText value="#{msg.register_personaldata}" />
@@ -98,4 +98,3 @@
         </ui:composition>
     </h:body>
 </html>
-

@@ -64,7 +64,7 @@ public class GameController // implements Serializable
 
         if(cardBean == null)
         {
-            //System.out.println("cardBean IS NULL THERFORE CREATING IT MOTHERFUCKERS");
+            
             cardBean = new CardBean(row*col);
             FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("cardBean", cardBean);
         }
@@ -131,7 +131,7 @@ public class GameController // implements Serializable
                 output.setImage(FILENAME_BACKGROUND);
                 output.setAlt("Card"+j+"_"+i);
                 //output.setImmediate(true);
-                /*
+                
                 //AJAX PART
                 AjaxBehavior ajax = new AjaxBehavior();
 
@@ -143,10 +143,10 @@ public class GameController // implements Serializable
              
                 
 
-                */
+                /*
                 ActionListener al = new CardActionListener();
                 output.addActionListener(al);
-                
+                */
 
                 column.getChildren().add(output);
             }
@@ -158,12 +158,10 @@ public class GameController // implements Serializable
 
     public static void cardClicked(HtmlCommandButton hcb)
     {
-        System.out.println("FUCKING CARD HAS BEEN CLICKED!");
         CardBean cardBean = (CardBean)FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("cardBean");
 
         if(cardBean == null)
         {
-            System.out.println("gameBean IS NULL THERFORE CREATING IT MOTHERFUCKERS");
             cardBean = new CardBean();
             FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("cardBean", cardBean);
         }
@@ -223,7 +221,7 @@ public class GameController // implements Serializable
         // This will be called once in the first RESTORE VIEW phase.
         if (dynamicDataTableGroup == null)
         {
-            System.out.println("Stacksize: "+getStackSize());
+            //System.out.println("Stacksize: "+getStackSize());
             loadDynamicList(Integer.parseInt(getStackSize())); // Preload dynamic list.
             populateDynamicDataTable(); // Populate editable datatable.
         }
@@ -251,7 +249,8 @@ public class GameController // implements Serializable
     }
 
     // take as input an array of strings and rearrange them in random order
-    private void shuffle(String[] a) {
+    private void shuffle(String[] a)
+    {
         int N = a.length;
         for (int i = 0; i < N; i++) {
             int r = i + (int) (Math.random() * (N-i));   // between i and N-1
