@@ -14,6 +14,8 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.AjaxBehaviorListener;
+import javax.faces.event.FacesEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletResponse;
 import model.CardBean;
 
@@ -53,7 +55,7 @@ public class CardActionListener implements AjaxBehaviorListener,ActionListener
             {
                 try
                 {
-                    FacesContext.getCurrentInstance().getExternalContext().dispatch("/game_success.xhtml");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/MemoryJSF/faces/game_success.xhtml");
                 } catch (IOException ex)
                 {
                     Logger.getLogger(CardActionListener.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,8 +87,18 @@ public class CardActionListener implements AjaxBehaviorListener,ActionListener
             
 
             GameController.cardClicked(output);
+            
             CardBean cardBean = (CardBean)FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("cardBean");
-
+            if(cardBean.getFoundPairs() >= (cardBean.getCards() / 2))
+            {
+                try
+                {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/MemoryJSF/faces/game_success.xhtml");
+                } catch (IOException ex)
+                {
+                    Logger.getLogger(CardActionListener.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
 
         }
     }

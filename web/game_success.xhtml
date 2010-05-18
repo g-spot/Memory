@@ -22,7 +22,7 @@
                         <h:outputText value="#{msg.game_success_success}"/>
                     </h1>
                     <p>
-                        <h:commandButton action="/game.xhtml" value="#{msg.to_game}" />
+                        <h:commandButton action="#{GameController.invalidate}" value="#{msg.to_login}" />
                     </p>
                 </h:form>
             </ui:define>

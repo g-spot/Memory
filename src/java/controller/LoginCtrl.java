@@ -30,6 +30,7 @@ public class LoginCtrl {
    
     /** Creates a new instance of LoginCtrl */
     public LoginCtrl() {
+        
     }
 
     private boolean loginfailed;

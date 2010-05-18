@@ -28,6 +28,8 @@ import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import javax.faces.event.FacesEvent;
+import javax.faces.event.FacesListener;
 import model.CardBean;
 
 import model.GameBean;
@@ -138,6 +140,8 @@ public class GameController // implements Serializable
                 ajax.addAjaxBehaviorListener(new CardActionListener());
 
                 output.addClientBehavior("click", ajax);
+
+
 
                 //AJAX PART ENDE
              
@@ -271,4 +275,12 @@ public class GameController // implements Serializable
     public void setStackSize(String stackSize) {
         this.stackSize = stackSize;
     }
+
+    public static String invalidate()
+    {
+        FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("cardBean", null);
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/index.xhtml";
+    }
+
 }
