@@ -5,9 +5,11 @@
 
 package model;
 
+import java.util.Date;
 import java.util.HashMap;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ApplicationScoped;
+import javax.faces.component.html.HtmlCommandButton;
 
 /**
  *
@@ -15,9 +17,13 @@ import javax.faces.bean.ApplicationScoped;
  */
 @ManagedBean(name="GameBean")
 @ApplicationScoped
+
 public class GameBean
 {
     private HashMap<String,UserBean> userList;
+
+
+
 
     /** Creates a new instance of GameBean */
     public GameBean() 
@@ -32,5 +38,9 @@ public class GameBean
     {
         return userList;
     }
+
+    /**
+     * @return the card1
+     */
 
 }

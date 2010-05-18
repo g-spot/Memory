@@ -26,6 +26,9 @@ import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import model.CardBean;
+
+import model.GameBean;
 
 /**
  *
@@ -42,15 +45,26 @@ public class GameController // implements Serializable
     //private static String[] dynamicHeaders; // Optional.
     private HtmlPanelGroup dynamicDataTableGroup; // Placeholder.
 
-    
-    private HtmlCommandButton card1 = null;
-    private HtmlCommandButton card2 = null;
+    private final static String FILENAME_BACKGROUND = "resources/img/card_background.png";
+
+
 
     private void loadDynamicList(int col, int row)
     {
         dynamicList = new ArrayList<List<String>>();
         String[][] cols = new String[row][col];
-        
+
+        //CardBean initialisieren/erstellen wenn nicht vorhanden
+        CardBean cardBean = (CardBean)FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("cardBean");
+
+        if(cardBean == null)
+        {
+            System.out.println("cardBean IS NULL THERFORE CREATING IT MOTHERFUCKERS");
+            cardBean = new CardBean(row*col);
+            FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("cardBean", cardBean);
+        }
+
+
         for(int i = 0; i < row ; i++)
         {
             for(int j=1;  j <= col ; j++)
@@ -93,17 +107,6 @@ public class GameController // implements Serializable
         dynamicDataTableGroup = new HtmlPanelGroup();
         HtmlDataTable dynamicDataTable;
 
-        FacesContext fc = FacesContext.getCurrentInstance();
-        ELContext ec = fc.getELContext();
-        Application app = fc.getApplication();
-        ExpressionFactory factory = app.getExpressionFactory();
-
-
-        // MethodExpression me = factory.createMethodExpression(ec,"/game.xhtml", Void.TYPE, new Class<?>[0]);
-
-
-
-
         // Iterate over columns.
         for(int j =0; j< dynamicList.size(); j++)
         {
@@ -118,39 +121,87 @@ public class GameController // implements Serializable
                 HtmlColumn column = new HtmlColumn();
                 dynamicDataTable.getChildren().add(column);
 
-                // Create <h:outputText value="dynamicHeaders[i]"> for <f:facet name="header"> of column.
-                /*HtmlOutputText header = new HtmlOutputText();
-                header.setValue("Header");
-                column.setHeader(header);*/
-
-                // Create <h:outputText value="#{dynamicItem[" + i + "]}"> for the body of column.
                 
                 HtmlCommandButton output = new HtmlCommandButton();
 
-                output.setImage("resources/img/card_background.png");
+                output.setImage(FILENAME_BACKGROUND);
                 output.setAlt("Card"+j+"_"+i);
                 output.setImmediate(true);
-                //output.setActionExpression(me);
-                ActionListener al = new TestActionListener();
+
+
+                
+                ActionListener al = new CardActionListener();
                 output.addActionListener(al);
 
-                //output.setActionExpression(me);
 
                 column.getChildren().add(output);
             }
                 dynamicDataTableGroup.getChildren().add(dynamicDataTable);
         }
-        // Add the datatable to <h:panelGroup binding="#{myBean.dynamicDataTableGroup}">.
-
 
     }
 
 
-    public String cardClicked()
+    public static void cardClicked(HtmlCommandButton hcb)
     {
         System.out.println("FUCKING CARD HAS BEEN CLICKED!");
-        return "index.xhtml";
-    }
+        CardBean cardBean = (CardBean)FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("cardBean");
+
+        if(cardBean == null)
+        {
+            System.out.println("gameBean IS NULL THERFORE CREATING IT MOTHERFUCKERS");
+            cardBean = new CardBean();
+            FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("cardBean", cardBean);
+        }
+
+
+            if(cardBean.getCard1() == null)
+            {
+                cardBean.setCard1(hcb);
+            }
+            // zweite Karte aufdecken
+            else if(cardBean.getCard2() == null)
+            {
+                cardBean.setCard2(hcb);
+
+                //count erhöhen
+                //memoryBean.setTrialCount(memoryBean.getTrialCount() + 1);
+
+                // found Pairs erhöhen
+                if(cardBean.getCard2().getImage().equals(cardBean.getCard1().getImage()))
+                {
+                    //foundpairs ++
+                    cardBean.setFoundPairs(cardBean.getFoundPairs() + 1);
+                    cardBean.resetSelection();
+                }
+            }
+            // bereits beide aufgedeckt
+            else
+            {
+                // 1. zwei ungleiche aufgedeckte Karten wieder umdrehen
+                if(!cardBean.getCard2().getImage().equals(cardBean.getCard1().getImage()))
+                {
+                    cardBean.getCard1().setImage(FILENAME_BACKGROUND);
+                    cardBean.getCard2().setImage(FILENAME_BACKGROUND);
+                    /*
+                    memoryBean.getFirstCard().setStatus(CardStatus.FOLDED);
+                    memoryBean.getSecondCard().setStatus(CardStatus.FOLDED);
+                    memoryBean.getFirstCard().setFileName(FILENAME_BACKGROUND);
+                    memoryBean.getSecondCard().setFileName(FILENAME_BACKGROUND);
+                     * */
+                    
+                }
+                cardBean.resetSelection();
+                cardBean.setCard1(hcb);
+                // 2. neue erste Karte aufdecken
+                //memoryBean.setFirstCard(card);
+                //card.setStatus(CardStatus.UNFOLDED);
+                //card.setFileName(memoryBean.getFileNames().get(cardID));
+            }
+
+        }
+
+    
 
 
     public HtmlPanelGroup getDynamicDataTableGroup()
