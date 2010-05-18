@@ -1,6 +1,9 @@
 package controller;
 
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
@@ -11,6 +14,8 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.AjaxBehaviorListener;
+import javax.servlet.http.HttpServletResponse;
+import model.CardBean;
 
 @ManagedBean(name="CardActionListener")
 @RequestScoped
@@ -46,6 +51,18 @@ public class CardActionListener implements AjaxBehaviorListener,ActionListener
                            );
 
             GameController.cardClicked(output);
+            CardBean cardBean = (CardBean)FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("cardBean");
+
+            if(cardBean.getFoundPairs() >= (cardBean.getCards() / 2))
+            {
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext().dispatch("/game_success.xhtml");
+                } catch (IOException ex)
+                {
+                    Logger.getLogger(CardActionListener.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
         }
     }
 
@@ -77,6 +94,9 @@ public class CardActionListener implements AjaxBehaviorListener,ActionListener
             
 
             GameController.cardClicked(output);
+            CardBean cardBean = (CardBean)FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("cardBean");
+
+            //Outcome
 
         }
     }
