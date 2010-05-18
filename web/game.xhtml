@@ -18,13 +18,86 @@
             </ui:define>
             <ui:define name="content">
                 <div id="right-box">
-                    
-                    <!--<h:commandLink> 
-                        <h:outputText value="#{msgs.linkText}"/> 
-                        <h:graphicImage value="/registration.jpg"/> 
-                    </h:commandLink> -->
-                    
+                <h1 class="hidden">#{msg.rb_hidden}</h1>
+                    <h2>#{msg.rb_currentScore}</h2>
+                    <h:form id="scoring">
+                        <table id="score" summary="#{msg.rb_summary_tableScore}">
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>#{msg.rb_score_me}</th>
+                            <th>#{msg.rb_score_enemy}</th>
+                        </tr>
+                        <tr>
+                            <th class="tablehead">#{msg.rb_foundPairs}</th>
+                            <td><h:outputText value="#{memoryBean.foundPairs}"></h:outputText></td>
+                            <td>n.a.</td></tr>
+                        <tr>
+                            <th class="tablehead">#{msg.rb_Trials}</th>
+                            <td><h:outputText value="#{memoryBean.trialCount}"></h:outputText></td>
+                            <td>n.a.</td>
+                        </tr>
+                        <tr>
+                            <th class="tablehead">#{msg.rb_Time}</th>
+                            <td><h:outputText value="#{memoryBean.currentTime}"></h:outputText></td>
+                            <td>n.a.</td>
+                        </tr>
+                    </table>
+                    <h2>#{msg.rb_gameInfo}</h2>
+                    <table id="gameinfo" summary="#{msg.rb_summary_tableGameInfo}">
+                        <tr>
+                            <th>#{msg.rb_pairsLeft}</th>
+                            <td><h:outputText value="#{memoryBean.pairsLeft}"></h:outputText></td>
+                        </tr>
+                        <tr>
+                            <th>#{msg.rb_genre}</th>
+                            <td>Alternative Rock</td>
+                        </tr>
+                    </table>
+                    </h:form>
+                    <h2>#{msg.rb_topActs}</h2>
+                        <ul id="favorites">
+                                <li>
+                                    <h:link>
+                                        <h:graphicImage value="resources/img/muse.jpg"/>
+                                        <h:outputText value="&nbsp;"/>
+                                        <h:outputText value="Muse"></h:outputText>
+                                    </h:link>
+                                </li>
+                                <p></p>
+                                <li>
+                                    <h:link>
+                                        <h:graphicImage value="resources/img/placebo.jpg"/>
+                                        <h:outputText value="&nbsp;"/>
+                                        <h:outputText value="Placebo"></h:outputText>
+                                    </h:link>
+                                </li>
+                                <p></p>
+                                <li>
+                                    <h:link>
+                                        <h:graphicImage value="resources/img/radiohead.png"/>
+                                        <h:outputText value="&nbsp;"/>
+                                        <h:outputText value="Radiohead"></h:outputText>
+                                    </h:link>
+                                </li>
+                                <p></p>
+                                <li>
+                                    <h:link>
+                                        <h:graphicImage value="resources/img/incubus.jpeg"/>
+                                        <h:outputText value="&nbsp;"/>
+                                        <h:outputText value="Incubus"></h:outputText>
+                                    </h:link>
+                                </li>
+                                <p></p>
+                                <li>
+                                    <h:link>
+                                        <h:graphicImage value="resources/img/foo_fighters.jpeg"/>
+                                        <h:outputText value="&nbsp;"/>
+                                        <h:outputText value="Foo Fighters"></h:outputText>
+                                    </h:link>
+                                </li>
+                        </ul>
                 </div>
+
                 <div id="card-box">
                     <h:form>
                         <h:panelGroup binding="#{GameController.dynamicDataTableGroup}" />
@@ -32,92 +105,6 @@
                 </div>
 
                 <div id="clear-divider"></div>
-<!--
-      <div id="right-box">
-        <h1 class="hidden">Table</h1>
-        <h2>Spielstand</h2>
-        <table id="score" summary="Die folgende Tabelle listet die Spielstaende auf!">
-          <tr>
-            <th>&nbsp;</th>
-            <th>Du</th>
-            <th>Gegner</th>
-          </tr>
-          <tr>
-            <th class="tablehead">Paare</th>
-            <td><%= memoryBean.getFoundPairs() %></td>
-            <td>n.a.</td></tr>
-          <tr>
-            <th class="tablehead">Versuche</th>
-            <td><%= memoryBean.getTrialCount() %></td>
-            <td>n.a.</td>
-          </tr>
-          <tr>
-            <th class="tablehead">Zeit</th>
-            <td><%= memoryBean.getCurrentTime() %></td>
-            <td>n.a.</td>
-          </tr>
-        </table>
-        <h2>Spielinformationen</h2>
-        <table id="gameinfo" summary="Die folgende Tabelle listet die Spielinformationen auf!">
-          <tr>
-            <th>Restliche Paare</th>
-            <td><%= memoryBean.getPairsLeft() %></td>
-          </tr>
-          <tr>
-            <th>Thema</th>
-            <td>Alternative Rock</td>
-          </tr>
-        </table>
-        <h2>Top-Künstler</h2>
-                                <ul id="favorites">
-                                    <li>
-                                        <a href="#"><img src="img/muse.jpg" alt="Bild der Alternative Band Muse" />&nbsp;Muse</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><img src="img/placebo.jpg" alt="Bild der Alternative Band Placebo" />&nbsp;Placebo</a>
-                                    </li>
-                                    <li>
-          <a href="#"><img src="img/radiohead.png" alt="Bild der Alternative Band Radiohead" />&nbsp;Radiohead</a>
-                                    </li>
-                                    <li>
-          <a href="#"><img src="img/incubus.jpeg" alt="Bild der Alternative Band Incubus" />&nbsp;Incubus</a>
-                                    </li>
-                                    <li>
-          <a href="#"><img src="img/foo_fighters.jpeg" alt="Bild der Alternative Band Foo Fighters" />&nbsp;Foo-Fighters</a>
-                                    </li>
-                                </ul>
-      </div>
-                    <div id="card-box">
-                        <form method="post" action="MemServlet">
-                            <table>
-                            <tr>
-                            <% for(int i=1;i<=16;i++) // TODO insert table size
-                               {
-                                 if(i > 1 && (i-1)%4 == 0)
-                                 {
-                            %>
-                            </tr>
-                            <tr>
-                            <%
-                                 }
-                            %>
-                                <td><input name="<%=i %>" type="image" src="<%= memoryBean.getCards().get(String.valueOf(i)).getFileName() %>" alt="Karte <%=i %>"/></td>
-                            <%
-
-                               }
-                            %>
-                            </tr>
-                            </table>
-                        </form>
-
-
-                    </div>
-
-
-                    <div id="clear-divider"></div>
-    </div>
--->
-
             </ui:define>
         </ui:composition>
 
