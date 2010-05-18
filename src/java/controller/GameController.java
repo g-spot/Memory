@@ -35,12 +35,16 @@ public class GameController //implements Serializable
     //private static String[] dynamicHeaders; // Optional.
     private HtmlPanelGroup dynamicDataTableGroup; // Placeholder.
 
+    
+    private HtmlCommandButton card1 = null;
+    private HtmlCommandButton card2 = null;
     // Actions -----------------------------------------------------------------------------------
 
     private void loadDynamicList(int col, int row)
     {
         dynamicList = new ArrayList<List<String>>();
         String[][] cols = new String[row][col];
+        
         for(int i = 0; i < row ; i++)
         {
             for(int j=1;  j <= col ; j++)
@@ -58,7 +62,7 @@ public class GameController //implements Serializable
             }  
         }
 
-        
+        //shuffle(cols);
         for(int i=0;i<row;i++)
         {
             shuffle(cols[i]);
@@ -105,8 +109,8 @@ public class GameController //implements Serializable
 
                 // Create <h:outputText value="#{dynamicItem[" + i + "]}"> for the body of column.
                 HtmlCommandButton output = new HtmlCommandButton();
-                output.setAlt("Card");
-                output.setImage("resources/img/card_images/" + dynamicList.get(j).get(i));
+                output.setImage("resources/img/card_background.png");
+                output.setAlt("Card"+j+"_"+i);
                 column.getChildren().add(output);
             }
                     dynamicDataTableGroup.getChildren().add(dynamicDataTable);
