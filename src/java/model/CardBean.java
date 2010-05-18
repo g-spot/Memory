@@ -47,21 +47,24 @@ public class CardBean
     /**
      * @param card1 the card1 to set
      */
-    public void setCard1(HtmlCommandButton card1) {
+    public void setCard1(HtmlCommandButton card1)
+    {
         this.card1 = card1;
     }
 
     /**
      * @return the card2
      */
-    public HtmlCommandButton getCard2() {
+    public HtmlCommandButton getCard2()
+    {
         return card2;
     }
 
     /**
      * @param card2 the card2 to set
      */
-    public void setCard2(HtmlCommandButton card2) {
+    public void setCard2(HtmlCommandButton card2)
+    {
         this.card2 = card2;
     }
 
@@ -86,56 +89,64 @@ public class CardBean
     /**
      * @return the startDate
      */
-    public Date getStartDate() {
+    public Date getStartDate()
+    {
         return startDate;
     }
 
     /**
      * @param startDate the startDate to set
      */
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Date startDate)
+    {
         this.startDate = startDate;
     }
 
     /**
      * @return the foundPairs
      */
-    public int getFoundPairs() {
+    public int getFoundPairs()
+    {
         return foundPairs;
     }
 
     /**
      * @param foundPairs the foundPairs to set
      */
-    public void setFoundPairs(int foundPairs) {
+    public void setFoundPairs(int foundPairs)
+    {
         this.foundPairs = foundPairs;
     }
 
     /**
      * @return the trialCount
      */
-    public int getTrialCount() {
+    public int getTrialCount()
+    {
         return trialCount;
     }
 
     /**
      * @param trialCount the trialCount to set
      */
-    public void setTrialCount(int trialCount) {
+    public void setTrialCount(int trialCount)
+    {
         this.trialCount = trialCount;
     }
 
     /**
      * @return the cards
      */
-    public int getCards() {
+    public int getCards()
+    {
         return cards;
     }
 
     /**
      * @param cards the cards to set
      */
-    public void setCards(int cards) {
+    public void setCards(int cards)
+    {
         this.cards = cards;
     }
 

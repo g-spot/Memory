@@ -59,7 +59,7 @@ public class GameController // implements Serializable
 
         if(cardBean == null)
         {
-            System.out.println("cardBean IS NULL THERFORE CREATING IT MOTHERFUCKERS");
+            //System.out.println("cardBean IS NULL THERFORE CREATING IT MOTHERFUCKERS");
             cardBean = new CardBean(row*col);
             FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("cardBean", cardBean);
         }
@@ -72,12 +72,12 @@ public class GameController // implements Serializable
                 if((j+(row*i)) <= (col*row)/2)
                 {
                     cols[i][j-1] = "card"+(j+((row)*i))+".jpg";
-                    System.out.println("card"+(j+((row)*i))+".jpg");
+                    //System.out.println("card"+(j+((row)*i))+".jpg");
                 }
                 else
                 {
                     cols[i][j-1] = "card"+(j+((row)*i)-8)+".jpg";
-                    System.out.println("card"+(j+((row)*i)-8)+".jpg");
+                    //System.out.println("card"+(j+((row)*i)-8)+".jpg");
                 }
             }  
         }
@@ -96,7 +96,7 @@ public class GameController // implements Serializable
             Collections.shuffle(dynamicList.get(i));
         }
         
-        System.out.println("Fertige Liste:" + dynamicList);
+        //System.out.println("Fertige Liste:" + dynamicList);
         
 
     }
@@ -127,12 +127,16 @@ public class GameController // implements Serializable
                 output.setImage(FILENAME_BACKGROUND);
                 output.setAlt("Card"+j+"_"+i);
                 output.setImmediate(true);
-
-
                 
+                javax.faces.component.behavior.AjaxBehavior ajax = new javax.faces.component.behavior.AjaxBehavior();
+                ajax.addAjaxBehaviorListener(new CardActionListener());
+                output.addClientBehavior("click", ajax);
+                
+                //output.setValueExpression("ajax",ef.createValueExpression("true", String.class) );
+                /*
                 ActionListener al = new CardActionListener();
                 output.addActionListener(al);
-
+                */
 
                 column.getChildren().add(output);
             }
