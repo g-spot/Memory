@@ -6,19 +6,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import javax.el.ELContext;
+import javax.el.MethodInfo;
 
 import javax.faces.context.FacesContext;
 import javax.el.ValueExpression;
 import javax.el.ExpressionFactory;
+import javax.el.MethodExpression;
+import javax.faces.application.Application;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlColumn;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.component.html.HtmlPanelGroup;
 import javax.faces.component.html.HtmlCommandButton;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 
 /**
  *
@@ -28,7 +35,7 @@ import javax.faces.event.ActionEvent;
 @ManagedBean(name="GameController")
 @SessionScoped
 
-public class GameController //implements Serializable
+public class GameController implements Serializable
 {
 
     private static List<List<String>> dynamicList; // Simulate fake DB.
@@ -38,7 +45,6 @@ public class GameController //implements Serializable
     
     private HtmlCommandButton card1 = null;
     private HtmlCommandButton card2 = null;
-    // Actions -----------------------------------------------------------------------------------
 
     private void loadDynamicList(int col, int row)
     {
@@ -87,6 +93,17 @@ public class GameController //implements Serializable
         dynamicDataTableGroup = new HtmlPanelGroup();
         HtmlDataTable dynamicDataTable;
 
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ELContext ec = fc.getELContext();
+        Application app = fc.getApplication();
+        ExpressionFactory factory = app.getExpressionFactory();
+
+
+        MethodExpression me = factory.createMethodExpression(ec,"#{GameController.cardClicked}", Void.TYPE, new Class<?>[0]);
+
+
+
+
         // Iterate over columns.
         for(int j =0; j< dynamicList.size(); j++)
         {
@@ -96,7 +113,6 @@ public class GameController //implements Serializable
             
             for (int i = 0; i < dynamicList.get(j).size(); i++)
             {
-
 
                 // Create <h:column>.
                 HtmlColumn column = new HtmlColumn();
@@ -108,9 +124,38 @@ public class GameController //implements Serializable
                 column.setHeader(header);*/
 
                 // Create <h:outputText value="#{dynamicItem[" + i + "]}"> for the body of column.
+                
                 HtmlCommandButton output = new HtmlCommandButton();
+
                 output.setImage("resources/img/card_background.png");
                 output.setAlt("Card"+j+"_"+i);
+                output.setImmediate(true);
+                //output.setActionExpression(me);
+                output.addActionListener(new ActionListener()
+                {
+
+                    public void processAction(ActionEvent event) throws AbortProcessingException
+                    {
+                        UIComponent uc = event.getComponent();
+                        HtmlCommandButton output = (HtmlCommandButton)uc;
+
+                        String alt = output.getAlt();
+                        alt.replace("Card", "");
+                        System.out.println(alt);
+                        String [] coords = alt.split("[_]");
+
+                        //DEBUG
+                        System.out.println("FUCK COORDS " + coords[0] + " " +coords[1]);
+
+                        output.setImage("resources/img/card_images/"
+                                        +(dynamicList.get(Integer.parseInt(coords[0]))).get(Integer.parseInt(coords[1]))
+                                       );
+                        FacesContext.getCurrentInstance().renderResponse();
+                    }
+                }
+                );
+                
+
                 column.getChildren().add(output);
             }
                     dynamicDataTableGroup.getChildren().add(dynamicDataTable);
@@ -120,7 +165,13 @@ public class GameController //implements Serializable
 
     }
 
-    // Getters -----------------------------------------------------------------------------------
+
+    public String cardClicked()
+    {
+        System.out.println("FUCKING CARD HAS BEEN CLICKED!");
+        return "index.xhtml";
+    }
+
 
     public HtmlPanelGroup getDynamicDataTableGroup()
     {
@@ -139,7 +190,7 @@ public class GameController //implements Serializable
         return dynamicList;
     }
 
-    // Setters -----------------------------------------------------------------------------------
+
 
     public void setDynamicDataTableGroup(HtmlPanelGroup dynamicDataTableGroup)
     {
