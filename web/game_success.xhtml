@@ -7,7 +7,7 @@
     <h:body>
 
         <ui:composition template="./pageTemplate.xhtml">
-            <ui:param name="pageTitle" value="#{msg.register_pagetitle}" />
+            <ui:param name="pageTitle" value="#{msg.game_success_pagetitle}" />
             <ui:define name="navigation">
                 <li>
                     <h:link outcome="index.xhtml">#{msg.navigation_backtolounge}</h:link>
@@ -19,10 +19,10 @@
             <ui:define name="content">
                 <h:form>
                     <h1>
-                        <h:outputText value="#{msg.register_failure_failure}"/>
+                        <h:outputText value="#{msg.game_success_success}"/>
                     </h1>
                     <p>
-                        <h:commandButton action="/register.xhtml" value="#{msg.back}" />
+                        <h:commandButton action="/game.xhtml" value="#{msg.to_game}" />
                     </p>
                 </h:form>
             </ui:define>
