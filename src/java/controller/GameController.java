@@ -141,15 +141,21 @@ public class GameController implements Serializable
 
                         String alt = output.getAlt();
                         alt.replace("Card", "");
+
+                        //Debug
                         System.out.println(alt);
+
                         String [] coords = alt.split("[_]");
 
                         //DEBUG
                         System.out.println("FUCK COORDS " + coords[0] + " " +coords[1]);
 
                         output.setImage("resources/img/card_images/"
-                                        +(dynamicList.get(Integer.parseInt(coords[0]))).get(Integer.parseInt(coords[1]))
+                                        +(dynamicList.get(Integer.parseInt(coords[0]))).get(Integer.parseInt(coords[1]) )
                                        );
+
+                        //TODO: CLICKED HANDLING
+
                         FacesContext.getCurrentInstance().renderResponse();
                     }
                 }
