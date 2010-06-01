@@ -1,100 +1,99 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:mc="http://java.sun.com/jsf/composite/mycomponents">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        <ui:composition template="./pageTemplate.xhtml">
-            <ui:param name="pageTitle" value="#{msg.register_pagetitle}" />
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="./template.xhtml">
             <ui:define name="navigation">
-                <li>
-                    <h:link outcome="index.xhtml">#{msg.navigation_backtolounge}</h:link>
-                </li>
-                <li>
-                    <h:link outcome="index.xhtml">#{msg.navigation_login}</h:link>
-                </li>
+                <ul>
+                    <li><h:link outcome="index" value="#{msg.backtologin}"/></li>
+                </ul>
             </ui:define>
             <ui:define name="content">
-
+                <h2>#{msg.register}</h2>
+                <p>#{msg.fillin}</p>
                 <h:form>
-                    <h1>
-                        <h:outputText value="#{msg.register_heading}"/>
-                    </h1>
-                    <h:outputText value="#{msg.register_pleasefillout}" />
-                    <h2>
-                        <h:outputText value="#{msg.register_logindata}" />
-                    </h2>
-                    <p>
-                        <h:outputLabel for="username" value="#{msg.register_username}" />
-                        <h:inputText validator="#{loginCtrl.validateUsername}" id="username" value="#{userBean.username}" styleClass="labeledinput" required="true" requiredMessage="Username muss ausgefüllt werden!" >
-                            <f:validateLength minimum="3" maximum="8"/>
-                            <f:validateRegex pattern="[A-Za-z]*" />
-                        </h:inputText>
-                        <p><em class="inputerror"><h:message for="username" /></em></p>
-                    </p>
-                    <p>
-                        <h:outputLabel for="password" value="#{msg.register_password}" />
-                        <h:inputSecret value="#{userBean.password}" binding="#{loginCtrl.passwordComponent}" id="password" styleClass="labeledinput" required="true" requiredMessage="#{msg.validate_passwordnotnull}">
-                            <f:validateLength minimum="8" />
-                        </h:inputSecret>
-                        <p><em class="inputerror"><h:message for="password" /></em></p>
-                    </p>
-                    <p>
-                        <h:outputLabel for="passwordproof" value="#{msg.register_passwordproof}" />
-                        <h:inputSecret validator="#{loginCtrl.validatePassword}" id="passwordproof" styleClass="labeledinput" required="true" requiredMessage="#{msg.validate_passwordproofnotnull}">
-                            <f:validateLength minimum="8" />
-                        </h:inputSecret>
-                        <p><em class="inputerror"><h:message for="passwordproof" /></em></p>
-                    </p>
-                    <p>
-                        <label for="form:check_additional_information">#{msg.register_check_additional_information}</label>
-                        <h:selectBooleanCheckbox id="check_additional_information"
-                                                 onclick="this.form.submit()"
-                                                 value="#{loginCtrl.showPersonalDetails}"
-                                                 immediate="true"
-                                                 valueChangeListener="#{loginCtrl.showPersonalDetailsChanged}">
-                        </h:selectBooleanCheckbox>
-                    </p>
+                    <h3>#{msg.logindatahead}</h3>
+                    <div class="formblock">
+                        <fieldset>
+                            <div>
+                                <h:outputLabel styleClass="Float" for="username" value="#{msg.username}"/>
+                                <h:inputText label="username" id="username" value="#{rc.newplayer.name}">
+                                    <f:validateRegex pattern="[A-Za-z][A-Za-z]*"/>
+                                </h:inputText>
+                                <h:messages styleClass="error" for="username" showDetail="true" showSummary="false"/>
+                            </div>
+                            <div>
+                                <h:outputLabel styleClass="Float" for="password" value="#{msg.password}"/>
+                                <h:inputSecret label="password" id="password" value="#{rc.newplayer.password}">
+                                    <f:validateLength minimum="8"/>
+                                    <f:validateRegex pattern="[A-Za-z0-9]*([A-Za-z][0-9]|[0-9][A-Za-z])[A-Za-z0-9]*"/>
+                                </h:inputSecret>
+                                <h:messages styleClass="error" for="password" showDetail="true" showSummary="false"/>
+                            </div>
+                            <div>
+                                <h:outputLabel styleClass="Float" for="stack" value="#{msg.stacksize}"/>
+                                    <h:selectOneMenu id="stack" value="#{rc.newplayer.stacksize}"  >
+                                        <f:selectItem itemValue="4" itemLabel="2x2"/>
+                                        <f:selectItem itemValue="16" itemLabel="4x4"/>
+                                        <f:selectItem itemValue="36" itemLabel="6x6"/>
+                                    </h:selectOneMenu>
+                            </div>
+                        </fieldset>
+                    </div>
 
-                    <h:panelGroup id="additional_information" rendered="#{loginCtrl.showPersonalDetails}">
-                        <h2>
-                            <h:outputText value="#{msg.register_personaldata}" />
-                        </h2>
-                        <p>
-                            <h:outputLabel for="firstname" value="#{msg.register_firstname}" />
-                            <h:inputText id="firstname" value="#{userBean.firstname}" styleClass="labeledinput" />
-                            <p><em class="inputerror"><h:message for="firstname" /></em></p>
-                        </p>
-                        <p>
-                            <h:outputLabel for="lastname" value="#{msg.register_lastname}" />
-                            <h:inputText id="lastname" value="#{userBean.lastname}" styleClass="labeledinput" />
-                            <p><em class="inputerror"><h:message for="lastname" /></em></p>
-                        </p>
-                        <p>
-                            <h:outputLabel for="dateofbirth" value="#{msg.register_dateofbirth}" />
-                            <h:inputText validator="#{loginCtrl.validateDateOfBirth}" id="dateofbirth" value="#{userBean.dateofbirth}" required="false" styleClass="labeledinput">
-                            </h:inputText>
-                            <p><em class="inputerror"><h:message for="dateofbirth" /></em></p>
-                        </p>
-                        <p>
-                            <h:outputLabel for="sex" value="#{msg.register_sex}" />
-                            <h:selectOneListbox id="sex" value="#{userBean.sex}" size="1" styleClass="labeledinput">
-                                <f:selectItem itemLabel="#{msg.register_sex_male}" itemValue="male" />
-                                <f:selectItem itemLabel="#{msg.register_sex_female}" itemValue="female" />
-                            </h:selectOneListbox>
-                            <p><em class="inputerror"><h:message for="sex" /></em></p>
-                        </p>
+                    <h:selectBooleanCheckbox id="showpersonaldata" immediate="true" value="#{rc.displayprivatedata}"
+                                             valueChangeListener="#{rc.displayChanged}" onclick="this.form.submit()"/>
+                    <h:outputLabel styleClass="Float" for="showpersonaldata" value="#{msg.showpersonal}"/>
+
+                    <h:panelGroup rendered="#{rc.displayprivatedata}">
+                        <h3>#{msg.persdatahead}</h3>
+                        <div class="formblock">
+                            <fieldset>
+                                <div>
+                                    <h:outputLabel styleClass="Float" for="firstname" value="#{msg.firstname}"/>
+                                    <h:inputText id="firstname" value="#{rc.newplayer.firstname}">
+                                        <f:validateRegex pattern="[A-Za-z][A-Za-z]*"/>
+                                    </h:inputText>
+                                    <h:messages styleClass="error" for="firstname" showDetail="true" showSummary="false"/>
+                                </div>
+                                <div>
+                                    <h:outputLabel styleClass="Float" for="lastname" value="#{msg.lastname}"/>
+                                    <h:inputText id="lastname" value="#{rc.newplayer.lastname}">
+                                        <f:validateRegex pattern="[A-Za-z][A-Za-z]*"/>
+                                    </h:inputText>
+                                    <h:messages styleClass="error" for="lastname" showDetail="true" showSummary="false"/>
+                                </div>
+
+                                <div>
+                                    <h:outputLabel styleClass="Float" for="dateofbirth" value="#{msg.birthdate}"/>
+                                    <h:inputText id="dateofbirth" value="#{rc.newplayer.birthday}" validator="#{rc.validateBirthday}">
+                                    </h:inputText>
+                                    <h:messages styleClass="error" for="dateofbirth" showDetail="true" showSummary="false"/>
+                                </div>
+                                <div>
+                                    <h:outputLabel styleClass="Float" for="sex" value="#{msg.sex}"/>
+                                    <h:selectOneMenu id="sex" value="#{rc.newplayer.sex}"  >
+                                        <f:selectItem itemValue="w" itemLabel="#{msg.female}"/>
+                                        <f:selectItem itemValue="m" itemLabel="#{msg.male}"/>
+                                    </h:selectOneMenu>
+                                </div>
+                            </fieldset>
+                        </div>
                     </h:panelGroup>
-                    <p>
-                        <h:commandButton action="#{loginCtrl.register}" value="#{msg.register_register}" />
-                    </p>
+                    <div id="buttons">
+                        <h:commandButton value="#{msg.regbutton}" accesskey="r" action="#{rc.register}" rendered="#{!rc.registrationsuccessful}"/>
+                    </div>
+                    <h:panelGroup rendered="#{rc.registrationsuccessful}">
+                        <h:outputText value="#{msg.successgoto} "/>
+                        <h:link value="#{msg.login}" accesskey="l" outcome="index"/>
+                    </h:panelGroup>
+
+
                 </h:form>
             </ui:define>
         </ui:composition>
-    </h:body>
+    </body>
 </html>

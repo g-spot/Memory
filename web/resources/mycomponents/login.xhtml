@@ -1,39 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:composite="http://java.sun.com/jsf/composite">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite">
 
-  <!-- INTERFACE -->
-  <composite:interface>
-  </composite:interface>
+    <!-- INTERFACE -->
+    <composite:interface>
+        <composite:attribute name="name" required="false"/>
+        <composite:attribute name="password" required="false"/>
+        <composite:attribute name="action" method-signature="java.lang.String f()" required="true"/>
+    </composite:interface>
 
-  <!-- IMPLEMENTATION -->
-  <composite:implementation>
-    <h:form>
-        <h1>
-            <h:outputText value="#{msg.login_heading}"/>
-        </h1>
-        <p>
-            <label for="username">#{msg.login_username}</label>
-            <h:inputText id="username" value="#{loginCtrl.username}" styleClass="labeledinput" />
-        </p>
-        <p>
-            <label for="password">#{msg.login_password}</label>
-            <h:inputSecret id="password" value="#{loginCtrl.password}" styleClass="labeledinput" />
-        </p>
-        <p>
-            <label for="stacksize">#{msg.login_stacksize}</label>
-            <h:selectOneListbox id="stacksize" value="#{GameController.stackSize}" size="1" styleClass="labeledinput">
-                <f:selectItem itemLabel="2x2" itemValue="4" />
-                <f:selectItem itemLabel="4x4" itemValue="16" />
-                <f:selectItem itemLabel="6x6" itemValue="36" />
-            </h:selectOneListbox>
-        </p>
-        <p>
-            <h:commandButton action="#{loginCtrl.login}" value="#{msg.login_login}" />
-        </p>
-    </h:form>
-  </composite:implementation>
+    <!-- IMPLEMENTATION -->
+    <composite:implementation>
+        <h:form>
+            <h:panelGrid>
+                <h:outputLabel value="#{msg.name}" for="name"/>
+                <h:inputText id="name" value="#{cc.attrs.name}"/>
+                <h:outputLabel value="#{msg.password}"  for="password"/>
+                <h:inputSecret id="password" value="#{cc.attrs.password}"/>
+                <h:commandButton value="#{msg.login}" action="#{cc.attrs.action}"/>
+            </h:panelGrid>
+        </h:form>
+    </composite:implementation>
 </html>

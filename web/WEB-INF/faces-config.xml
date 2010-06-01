@@ -8,27 +8,17 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 
     <application>
-        <locale-config>
-            <default-locale>en</default-locale>
-            <supported-locale>de</supported-locale>
-        </locale-config>
-        <resource-bundle>
-            <base-name>i18n</base-name>
-            <var>msg</var>
-        </resource-bundle>
+      <locale-config>
+        <default-locale>de</default-locale>
+        <supported-locale>en</supported-locale>
+      </locale-config>
+      <resource-bundle>
+        <base-name>i18n</base-name>
+        <var>msg</var>
+      </resource-bundle>
     </application>
-
-    <managed-bean>
-        <managed-bean-name>userBean</managed-bean-name>
-        <managed-bean-class>model.UserBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-
-    <managed-bean>
-        <managed-bean-name>memoryBean</managed-bean-name>
-        <managed-bean-class>model.MemoryBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-
 </faces-config>
+
+
+
 

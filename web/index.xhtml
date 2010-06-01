@@ -1,35 +1,21 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:mc="http://java.sun.com/jsf/composite/mycomponents">
-    <h:body>
+      xmlns:mc="http://java.sun.com/jsf/composite/mycomponents"
+      xmlns:h="http://java.sun.com/jsf/html">
 
-        <ui:composition template="./pageTemplate.xhtml">
-            <ui:param name="pageTitle" value="#{msg.login_pagetitle}" />
+    <body>     
+        <ui:composition template="./template.xhtml">
             <ui:define name="navigation">
-                <li>
-                    <h:link outcome="index.xhtml">#{msg.navigation_backtolounge}</h:link>
-                </li>
-                <li>
-                    <h:link outcome="index.xhtml">#{msg.navigation_login}</h:link>
-                </li>
+                <ul>
+                  <li> <h:link value="#{msg.register}" outcome="register"/></li>
+                </ul>
             </ui:define>
             <ui:define name="content">
-                <mc:login />
-                <p>
-                    <h:outputText value="#{msg.login_nousername} " />
-                    <h:link outcome="register.xhtml" value="#{msg.login_registerhere}" />
-                </p>
-                <!--<p>
-
-                    <h:link outcome="game.xhtml" value="Gleich zum Game " />
-                </p>-->
+                <mc:login  name="#{lc.name}" password="#{lc.password}" action="#{lc.login}"/>
+                <h:outputText value="#{msg.loginfailed}" styleClass="error" rendered="#{lc.showloginfailed}"/>
             </ui:define>
         </ui:composition>
-
-    </h:body>
+    </body>
 </html>
-
