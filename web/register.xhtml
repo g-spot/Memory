@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="./template.xhtml">
+            <ui:define name="navigation">
+                <ul>
+                    <li><h:link outcome="index" value="#{msg.backtologin}"/></li>
+                </ul>
+            </ui:define>
+            <ui:define name="content">
+                <h2>#{msg.register}</h2>
+                <p>#{msg.fillin}</p>
+                <h:form>
+                    <h3>#{msg.logindatahead}</h3>
+                    <div class="formblock">
+                        <fieldset>
+                            <div>
+                                <h:outputLabel styleClass="Float" for="username" value="#{msg.username}"/>
+                                <h:inputText label="username" id="username" value="#{rc.newplayer.name}">
+                                    <f:validateRegex pattern="[A-Za-z][A-Za-z]*"/>
+                                </h:inputText>
+                                <h:messages styleClass="error" for="username" showDetail="true" showSummary="false"/>
+                            </div>
+                            <div>
+                                <h:outputLabel styleClass="Float" for="password" value="#{msg.password}"/>
+                                <h:inputSecret label="password" id="password" value="#{rc.newplayer.password}">
+                                    <f:validateLength minimum="8"/>
+                                    <f:validateRegex pattern="[A-Za-z0-9]*([A-Za-z][0-9]|[0-9][A-Za-z])[A-Za-z0-9]*"/>
+                                </h:inputSecret>
+                                <h:messages styleClass="error" for="password" showDetail="true" showSummary="false"/>
+                            </div>
+                            <div>
+                                <h:outputLabel styleClass="Float" for="stack" value="#{msg.stacksize}"/>
+                                    <h:selectOneMenu id="stack" value="#{rc.newplayer.stacksize}"  >
+                                        <f:selectItem itemValue="4" itemLabel="2x2"/>
+                                        <f:selectItem itemValue="16" itemLabel="4x4"/>
+                                        <f:selectItem itemValue="36" itemLabel="6x6"/>
+                                    </h:selectOneMenu>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <h:selectBooleanCheckbox id="showpersonaldata" immediate="true" value="#{rc.displayprivatedata}"
+                                             valueChangeListener="#{rc.displayChanged}" onclick="this.form.submit()"/>
+                    <h:outputLabel styleClass="Float" for="showpersonaldata" value="#{msg.showpersonal}"/>
+
+                    <h:panelGroup rendered="#{rc.displayprivatedata}">
+                        <h3>#{msg.persdatahead}</h3>
+                        <div class="formblock">
+                            <fieldset>
+                                <div>
+                                    <h:outputLabel styleClass="Float" for="firstname" value="#{msg.firstname}"/>
+                                    <h:inputText id="firstname" value="#{rc.newplayer.firstname}">
+                                        <f:validateRegex pattern="[A-Za-z][A-Za-z]*"/>
+                                    </h:inputText>
+                                    <h:messages styleClass="error" for="firstname" showDetail="true" showSummary="false"/>
+                                </div>
+                                <div>
+                                    <h:outputLabel styleClass="Float" for="lastname" value="#{msg.lastname}"/>
+                                    <h:inputText id="lastname" value="#{rc.newplayer.lastname}">
+                                        <f:validateRegex pattern="[A-Za-z][A-Za-z]*"/>
+                                    </h:inputText>
+                                    <h:messages styleClass="error" for="lastname" showDetail="true" showSummary="false"/>
+                                </div>
+
+                                <div>
+                                    <h:outputLabel styleClass="Float" for="dateofbirth" value="#{msg.birthdate}"/>
+                                    <h:inputText id="dateofbirth" value="#{rc.newplayer.birthday}" validator="#{rc.validateBirthday}">
+                                    </h:inputText>
+                                    <h:messages styleClass="error" for="dateofbirth" showDetail="true" showSummary="false"/>
+                                </div>
+                                <div>
+                                    <h:outputLabel styleClass="Float" for="sex" value="#{msg.sex}"/>
+                                    <h:selectOneMenu id="sex" value="#{rc.newplayer.sex}"  >
+                                        <f:selectItem itemValue="w" itemLabel="#{msg.female}"/>
+                                        <f:selectItem itemValue="m" itemLabel="#{msg.male}"/>
+                                    </h:selectOneMenu>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </h:panelGroup>
+                    <div id="buttons">
+                        <h:commandButton value="#{msg.regbutton}" accesskey="r" action="#{rc.register}" rendered="#{!rc.registrationsuccessful}"/>
+                    </div>
+                    <h:panelGroup rendered="#{rc.registrationsuccessful}">
+                        <h:outputText value="#{msg.successgoto} "/>
+                        <h:link value="#{msg.login}" accesskey="l" outcome="index"/>
+                    </h:panelGroup>
+
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
