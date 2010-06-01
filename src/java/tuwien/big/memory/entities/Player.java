@@ -24,6 +24,7 @@ public class Player {
     private String password = null;
     private String birthday = null;
     private String sex = null;
+    private String genre = null;
 
     /** Creates a new instance of Player */
     public Player() {
@@ -55,6 +56,20 @@ public class Player {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the genre
+     */
+    public String getGenre() {
+        return genre;
+    }
+
+    /**
+     * @param genre the genre to set
+     */
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     /**

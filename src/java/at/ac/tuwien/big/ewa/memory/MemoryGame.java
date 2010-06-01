@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import at.ac.tuwien.big.ewa.memory.MemoryCard.CardState;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 
 /**
  * Class representing a memory game.
@@ -113,6 +115,7 @@ public class MemoryGame {
 	/**
 	 * The current player.
 	 */
+
 	private MemoryPlayer currentPlayer;
 
 	/**
@@ -152,6 +155,7 @@ public class MemoryGame {
 	 *            ids to create cards for.
 	 */
 	public MemoryGame(List<MemoryPlayer> players, List<String> cardIds) {
+                System.out.println("MemoryGame() with " + players.size() + " players");
 		// guard illegal arguments
 		if (players.size() < 1) {
 			throw new IllegalArgumentException(
@@ -216,10 +220,12 @@ public class MemoryGame {
 	 *            to initialize list with.
 	 */
 	private void initializePlayers(List<MemoryPlayer> players) {
+                System.out.println("INIT PLAYERS " + players.size());
 		this.players = new ArrayList<MemoryPlayer>();
 		this.players.addAll(players);
 		Collections.shuffle(this.players);
 		this.currentPlayer = this.players.get(0);
+                System.out.println("SUCCESS: " + this.currentPlayer.getName());
 
 		// initialize time table
 		for (MemoryPlayer player : this.players) {
@@ -269,8 +275,14 @@ public class MemoryGame {
 	 * @return all the players.
 	 */
 	public List<MemoryPlayer> getPlayers() {
-		return Collections.unmodifiableList(players);
+            return Collections.unmodifiableList(players);
 	}
+
+        public void addPlayer(MemoryPlayer player)
+        {
+            players.add(player);
+            this.spentTimePlayerMap.put(player, 0l);
+        }
 
 	/**
 	 * Returns the currently uncovered card 1. Might be null, if no card is

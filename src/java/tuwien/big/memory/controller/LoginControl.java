@@ -4,6 +4,7 @@ package tuwien.big.memory.controller;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+import at.ac.tuwien.big.ewa.memory.MemoryPlayer;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -34,17 +35,42 @@ public class LoginControl {
     }
 
     public String login() {
+        try
+                {
         player = getRpp().getRegisteredPlayer(name, password);
         if (player != null) {
             setShowloginfailed(false);
 
-            mc = new MemoryControl(player.getName(), player.getStacksize());
+            //Map<String, Object> appMap = FacesContext.getCurrentInstance().getExternalContext().getApplicationMap();
+            //MemoryControl mc = (MemoryControl)appMap.get("mc");
+            if(mc == null) // first player
+            {
+                System.out.println("mc IS NULL");
+                //mc = new MemoryControl(player.getName(), player.getStacksize(), player.getGenre());
+
+            }
+            else
+            {
+                mc.addPlayer(player.getName(), player.getStacksize(), player.getGenre());
+                System.out.println("mc IS NOT NULL");
+
+                //Map<String, Object> appMap = FacesContext.getCurrentInstance().getExternalContext().getApplicationMap();
+                //MemoryControl mc = (MemoryControl)appMap.get("mc");
+            }
+            //else
+              //  mc.addSecondPlayer(player.getName());
 
             return "memory";
         } else {
             setShowloginfailed(true);
             return "index";
         }
+        } catch(Exception e)
+                {
+            System.out.println("FEHLER LOGIN(): " + e.toString());
+            e.printStackTrace();
+        }
+        return "index";
     }
 
     /**
@@ -129,5 +155,50 @@ public class LoginControl {
      */
     public void setMc(MemoryControl mc) {
         this.mc = mc;
+    }
+
+    /**
+     * @return the opponent
+     */
+    public MemoryPlayer getOpponent() {
+        return mc.getOpponent(player);
+    }
+
+    public MemoryPlayer getMe() {
+        return mc.getMe(player);
+    }
+
+    public boolean isMyTurn()
+    {
+        return mc.isTurn(player);
+    }
+
+    public String getMytime() {
+        return mc.getTimeForPlayer(getMe());
+    }
+
+    public String getOpponentstime() {
+        if(getOpponent() != null)
+            return mc.getTimeForPlayer(getOpponent());
+        else
+            return "00:00";
+    }
+
+    public String getTurn()
+    {
+        if(isMyTurn())
+            return "Your turn";
+        else
+            return "Opponents turn";
+    }
+
+    public double getRand()
+    {
+        return Math.random();
+    }
+
+    public void changeshow(int row, int column) {
+        if(isMyTurn())
+            mc.changeshow(row, column);
     }
 }

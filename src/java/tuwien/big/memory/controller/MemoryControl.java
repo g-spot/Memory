@@ -6,25 +6,30 @@ package tuwien.big.memory.controller;
 
 import at.ac.tuwien.big.ewa.memory.MemoryCard;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import at.ac.tuwien.big.ewa.memory.MemoryGame;
 import at.ac.tuwien.big.ewa.memory.MemoryPlayer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.faces.bean.ApplicationScoped;
+import tuwien.big.memory.entities.Player;
 
 /**
  *
  * @author Dieter
  */
 @ManagedBean(name = "mc")
-@SessionScoped
+@ApplicationScoped
 public class MemoryControl {
 
     MemoryGame mgame = null;
     int stacksize = 0;
-    String playername = "Player1";
+    private String genre = null;
+    private String playername1 = "Player1";
+    private String playername2 = "Player2";
+    private MemoryPlayer player1 = null;
+    private MemoryPlayer player2 = null;
     private String cardpath = "img/card_images/card";
     private String cardpathext = ".jpg";
     private String backcardpath = "img/card_background.png";
@@ -33,15 +38,36 @@ public class MemoryControl {
     public MemoryControl() {
     }
 
-    public MemoryControl(String playername, int stacksize) {
+    public MemoryControl(String playername, int stacksize, String genre) {
         this.stacksize = stacksize;
-        this.playername = playername;
+        this.genre = genre;
+        this.playername1 = playername;
+        init();
+    }
+
+    public void addPlayer(String playername, int stacksize, String genre) {
+        if(player1 == null)
+        {
+            this.stacksize = stacksize;
+            this.genre = genre;
+            this.playername1 = playername;
+        }
+        else
+            this.playername2 = playername;
         init();
     }
 
     public void init() {
         List<MemoryPlayer> playerlist = new ArrayList<MemoryPlayer>();
-        playerlist.add(new MemoryPlayer(playername));
+        if(player1 == null)
+        {
+            player1 = new MemoryPlayer(playername1);
+            playerlist.add(player1);
+        }
+        else
+        {
+            player2 = new MemoryPlayer(playername2);
+        }
 
         List<String> cardlist = new ArrayList<String>();
 
@@ -49,7 +75,10 @@ public class MemoryControl {
             cardlist.add(cardpath + i + cardpathext);
         }
 
-        mgame = new MemoryGame(playerlist, cardlist);
+        if(mgame == null)
+            mgame = new MemoryGame(playerlist, cardlist);
+        else
+            mgame.addPlayer(player2);
     }
 
     public MemoryPlayer getCurrentPlayer() {
@@ -64,6 +93,13 @@ public class MemoryControl {
 
     public String getTimeCurrentPlayer() {
         long millisec = mgame.getSpentTime(mgame.getCurrentPlayer());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+        return sdf.format(new Date(millisec));
+    }
+
+    public String getTimeForPlayer(MemoryPlayer player) {
+        long millisec = mgame.getSpentTime(player);
 
         SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
         return sdf.format(new Date(millisec));
@@ -133,4 +169,27 @@ public class MemoryControl {
     public void setBackcardpath(String backcardpath) {
         this.backcardpath = backcardpath;
     }
+
+    public MemoryPlayer getOpponent(Player p)
+        {
+            if(player1.getName().equals(p.getName()))
+                return player2;
+            else
+                return player1;
+        }
+
+        public boolean isTurn(Player p)
+        {
+            if(p.getName().equals(mgame.getCurrentPlayer().getName()))
+                return true;
+            else
+                return false;
+        }
+
+        public MemoryPlayer getMe(Player p) {
+            if(player1.getName().equals(p.getName()))
+                return player1;
+            else
+                return player2;
+        }
 }

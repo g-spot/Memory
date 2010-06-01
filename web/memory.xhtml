@@ -18,9 +18,21 @@
             </ui:define>
 
             <ui:define name="content">
+  <script type="text/javascript">
+  startAjaxPoll('foundpairs',1500);
+  startAjaxPoll('foundpairs2',1500);
+  startAjaxPoll('attempts',1500);
+  startAjaxPoll('attempts2',1500);
+  startAjaxPoll('time',1500);
+  startAjaxPoll('time2',1500);
+  startAjaxPoll('coveredpairs',1500);
+  startAjaxPoll('dynamic',1500);
+  startAjaxPoll('turn', 1500);
+  </script>
 
                 <div id="info_area">
                     <h2>#{msg.gamestatus}</h2>
+                    
                     <table id="score" summary="Diese Tabelle zeigt den aktuellen Spielstand">
                         <tbody>
                             <tr>
@@ -30,18 +42,18 @@
                             </tr>
                             <tr>
                                 <th class="label">#{msg.pairs}</th>
-                                <td><h:outputText id="foundpairs" value="#{lc.mc.currentPlayer.uncoveredMatchingPairsCount}"/></td>
-                                <td>N/A</td>
+                                <td><h:outputText id="foundpairs" value="#{lc.me.uncoveredMatchingPairsCount}" /></td>
+                                <td><h:outputText id="foundpairs2" value="#{lc.opponent.uncoveredMatchingPairsCount}" /></td>
                             </tr>
                             <tr>
                                 <th class="label">#{msg.attempts}</th>
-                                <td><h:outputText id="attempts" value="#{lc.mc.currentPlayer.allUncoveredPairsCount}"/></td>
-                                <td>N/A</td>
+                                <td><h:outputText id="attempts" value="#{lc.me.allUncoveredPairsCount}"/></td>
+                                <td><h:outputText id="attempts2" value="#{lc.opponent.allUncoveredPairsCount}" /></td>
                             </tr>
                             <tr>
                                 <th class="label">#{msg.time}</th>
-                                <td><h:outputText id="time" value="#{lc.mc.timeCurrentPlayer}"/></td>
-                                <td>N/A</td>
+                                <td><h:outputText id="time" value="#{lc.mytime}"/></td>
+                                <td><h:outputText id="time2" value="#{lc.opponentstime}" /></td>
                             </tr>
                         </tbody>
                     </table>
@@ -69,32 +81,33 @@
                 <hr class="accessibility" />
                 <div id="board">
                     <h2 class="accessibility">Spielbrett</h2>
-                    <h:form>
-                        <table summary="Diese Tabelle stellt das Memory-Brett mit den Karten dar">
-                            <tr class="accessibility">
-                                <th>Kartenspalte 1</th>
-                                <th>Kartenspalte 2</th>
-                                <th>Kartenspalte 3</th>
-                                <th>Kartenspalte 4</th>
-                                <th>Kartenspalte 5</th>
+                    <h:outputText id="turn" value="#{lc.turn}" />
+                        <h:form id="dynamic">
+                            <table summary="Diese Tabelle stellt das Memory-Brett mit den Karten dar">
+                                <tr class="accessibility">
+                                    <th>Kartenspalte 1</th>
+                                    <th>Kartenspalte 2</th>
+                                    <th>Kartenspalte 3</th>
+                                    <th>Kartenspalte 4</th>
+                                    <th>Kartenspalte 5</th>
 
-                            </tr>
-                            <f:ajax  render="@form :attempts :foundpairs :time :coveredpairs">
-                                <ui:repeat value="#{lc.mc.cards}" var="row" >
-                                    <tr>
-                                        <th class="accessibility">Kartenzeile #{lc.mc.cards.indexOf(row)+1}</th>
-                                        <ui:repeat value="#{row}" var="card" >
-                                            <td class="#{card.currentState.toString().equals('UNCOVERED')?'visible_card':''}">
-                                                <h:commandLink action="#{lc.mc.changeshow(card.row,card.column)}">
-                                                    <h:graphicImage name="#{card.currentState.toString().equals('UNCOVERED')?card.id:lc.mc.backcardpath}" alt="card"/>
-                                                </h:commandLink>
-                                            </td>
-                                        </ui:repeat>
-                                    </tr>
-                                </ui:repeat>
-                            </f:ajax>
-                        </table>
-                    </h:form>
+                                </tr>
+                                <f:ajax render="@form :attempts :attempts2 :foundpairs :foundpairs2 :time :time2 :coveredpairs">
+                                    <ui:repeat value="#{lc.mc.cards}" var="row" >
+                                        <tr>
+                                            <th class="accessibility">Kartenzeile #{lc.mc.cards.indexOf(row)+1}</th>
+                                            <ui:repeat value="#{row}" var="card" >
+                                                <td class="#{card.currentState.toString().equals('UNCOVERED')?'visible_card':''}">
+                                                    <h:commandLink action="#{lc.changeshow(card.row,card.column)}">
+                                                        <h:graphicImage name="#{card.currentState.toString().equals('UNCOVERED')?card.id:lc.mc.backcardpath}" alt="card"/>
+                                                    </h:commandLink>
+                                                </td>
+                                            </ui:repeat>
+                                        </tr>
+                                    </ui:repeat>
+                                </f:ajax>
+                            </table>
+                        </h:form>
                 </div>
 
             </ui:define>
