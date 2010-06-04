@@ -24,15 +24,27 @@ import tuwien.big.memory.entities.Player;
 public class MemoryControl {
 
     MemoryGame mgame = null;
+    private boolean gameReady = false;
+    private String gameState = "Game Status: Waiting for players...";
+
+    // GAMEMODE
     int stacksize = 0;
-    private String genre = null;
+
+    private String genre;
+
+    // NAMEN DER SPIELER
     private String playername1 = "Player1";
     private String playername2 = "Player2";
+
     private MemoryPlayer player1 = null;
     private MemoryPlayer player2 = null;
     private String cardpath = "img/card_images/card";
     private String cardpathext = ".jpg";
     private String backcardpath = "img/card_background.png";
+
+    // RESULTS
+    private int resultPlayer1;
+    private int resultPlayer2;
 
     /** Creates a new instance of MemoryControl */
     public MemoryControl() {
@@ -46,7 +58,7 @@ public class MemoryControl {
     }
 
     public void addPlayer(String playername, int stacksize, String genre) {
-        if(player1 == null)
+        if(getPlayer1() == null)
         {
             this.stacksize = stacksize;
             this.genre = genre;
@@ -59,14 +71,14 @@ public class MemoryControl {
 
     public void init() {
         List<MemoryPlayer> playerlist = new ArrayList<MemoryPlayer>();
-        if(player1 == null)
+        if(getPlayer1() == null)
         {
-            player1 = new MemoryPlayer(playername1);
-            playerlist.add(player1);
+            setPlayer1(new MemoryPlayer(playername1));
+            playerlist.add(getPlayer1());
         }
         else
         {
-            player2 = new MemoryPlayer(playername2);
+            setPlayer2(new MemoryPlayer(playername2));
         }
 
         List<String> cardlist = new ArrayList<String>();
@@ -78,7 +90,23 @@ public class MemoryControl {
         if(mgame == null)
             mgame = new MemoryGame(playerlist, cardlist);
         else
-            mgame.addPlayer(player2);
+            mgame.addPlayer(getPlayer2());
+    }
+
+    public void restartInGame() {
+        List<MemoryPlayer> playerlist = new ArrayList<MemoryPlayer>();
+
+        playerlist.add(getPlayer1());
+        if(getPlayer2() != null)
+            playerlist.add(getPlayer2());
+
+        List<String> cardlist = new ArrayList<String>();
+
+        for (int i = 1; i <= (stacksize / 2); i++) {
+            cardlist.add(cardpath + i + cardpathext);
+        }
+
+        mgame = new MemoryGame(playerlist, cardlist);
     }
 
     public MemoryPlayer getCurrentPlayer() {
@@ -171,25 +199,162 @@ public class MemoryControl {
     }
 
     public MemoryPlayer getOpponent(Player p)
+    {
+        if(getPlayer1().getName().equals(p.getName()))
+            return getPlayer2();
+        else
+            return getPlayer1();
+    }
+
+    public boolean isTurn(Player p)
+    {
+        if(p.getName().equals(mgame.getCurrentPlayer().getName()))
+            return true;
+        else
+            return false;
+    }
+
+    public MemoryPlayer getMe(Player p)
+    {
+        if(getPlayer1().getName().equals(p.getName()))
+            return getPlayer1();
+        else
+            return getPlayer2();
+    }
+
+    /**
+     * @return the gameFinished
+     */
+    public boolean isGameFinished() {
+        if(this.mgame.isGameOver())
         {
-            if(player1.getName().equals(p.getName()))
-                return player2;
-            else
-                return player1;
+            createResults();
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public String getGenre()
+    {
+        return this.genre;
+    }
+
+    public void setGenre(String genre)
+    {
+        this.genre = genre;
+    }
+
+    // liefert die Highscore Werte
+    // TODO: checken ob korrekte Werte
+    // liefert 0 zurück wenn Spieler kein einziges Paar korrekt aufgedeckt hat
+
+    private void createResults()
+    {
+        if(getPlayer1().getUncoveredMatchingPairsCount()!=0)
+        {
+            int time = Integer.getInteger(getTimeForPlayer(getPlayer1()));
+            this.setResultPlayer1(time / getPlayer1().getUncoveredMatchingPairsCount());
+        }
+        else {
+            this.setResultPlayer1(0);
         }
 
-        public boolean isTurn(Player p)
+        if(getPlayer2().getUncoveredMatchingPairsCount()!=0)
         {
-            if(p.getName().equals(mgame.getCurrentPlayer().getName()))
-                return true;
-            else
-                return false;
+            int time = Integer.getInteger(getTimeForPlayer(getPlayer2()));
+            this.setResultPlayer2(time / getPlayer2().getUncoveredMatchingPairsCount());
         }
+        else {
+            this.setResultPlayer1(0);
+        }
+    }
 
-        public MemoryPlayer getMe(Player p) {
-            if(player1.getName().equals(p.getName()))
-                return player1;
-            else
-                return player2;
-        }
+    /**
+     * @return the resultPlayer1
+     */
+    public int getResultPlayer1() {
+        return resultPlayer1;
+    }
+
+    /**
+     * @param resultPlayer1 the resultPlayer1 to set
+     */
+    public void setResultPlayer1(int resultPlayer1) {
+        this.resultPlayer1 = resultPlayer1;
+    }
+
+    /**
+     * @return the resultPlayer2
+     */
+    public int getResultPlayer2() {
+        return resultPlayer2;
+    }
+
+    /**
+     * @param resultPlayer2 the resultPlayer2 to set
+     */
+    public void setResultPlayer2(int resultPlayer2) {
+        this.resultPlayer2 = resultPlayer2;
+    }
+
+    /**
+     * @return the player1
+     */
+    public MemoryPlayer getPlayer1() {
+        return player1;
+    }
+
+    /**
+     * @param player1 the player1 to set
+     */
+    public void setPlayer1(MemoryPlayer player1) {
+        this.player1 = player1;
+    }
+
+    /**
+     * @return the player2
+     */
+    public MemoryPlayer getPlayer2() {
+        return player2;
+    }
+
+    /**
+     * @param player2 the player2 to set
+     */
+    public void setPlayer2(MemoryPlayer player2) {
+        this.player2 = player2;
+    }
+
+    /**
+     * @return the gameReady
+     */
+    public boolean isGameReady() {
+        return gameReady;
+    }
+
+    /**
+     * @param gameReady the gameReady to set
+     */
+    public void setGameReady(boolean gameReady) {
+        this.gameReady = gameReady;
+    }
+
+    public void setGameState(String str)
+    {
+        this.gameState = str;
+    }
+
+    public String getGameState()
+    {
+        return this.gameState;
+    }
+
+    public String joinGame()
+    {
+        return "memory";
+    }
+
+
 }

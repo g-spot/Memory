@@ -26,9 +26,11 @@ public class LoginControl {
     @ManagedProperty(value = "#{mc}")
     private MemoryControl mc;
     @ManagedProperty(value = "false")
-    private boolean showloginfailed;
+    private boolean showloginfailed = false;
+    private boolean loggedIn = false;
     private String name;
     private String password;
+    
 
     /** Creates a new instance of LoginControl */
     public LoginControl() {
@@ -36,41 +38,54 @@ public class LoginControl {
 
     public String login() {
         try
-                {
+        {
         player = getRpp().getRegisteredPlayer(name, password);
         if (player != null) {
             setShowloginfailed(false);
-
-            //Map<String, Object> appMap = FacesContext.getCurrentInstance().getExternalContext().getApplicationMap();
-            //MemoryControl mc = (MemoryControl)appMap.get("mc");
+            loggedIn = true;
             if(mc == null) // first player
             {
                 System.out.println("mc IS NULL");
-                //mc = new MemoryControl(player.getName(), player.getStacksize(), player.getGenre());
-
             }
             else
             {
                 mc.addPlayer(player.getName(), player.getStacksize(), player.getGenre());
                 System.out.println("mc IS NOT NULL");
-
-                //Map<String, Object> appMap = FacesContext.getCurrentInstance().getExternalContext().getApplicationMap();
-                //MemoryControl mc = (MemoryControl)appMap.get("mc");
             }
-            //else
-              //  mc.addSecondPlayer(player.getName());
 
+            if((mc.getPlayer1() == null) && (mc.getPlayer2() == null))
+            {
+                this.mc.setGameReady(false);
+                this.mc.setGameState("Game Status: Waiting for players...");
+                return "index";
+            }
+            else if ((mc.getPlayer1() != null) && (mc.getPlayer2() == null))
+            {
+                this.mc.setGameReady(false);
+                this.mc.setGameState("Game Status: Waiting for opponent...");
+                return "index";
+            }
+            else if ((mc.getPlayer1() != null) && (mc.getPlayer2() != null))
+                this.mc.setGameReady(true);
+                return "memory";
+
+                }
+        else if(player != null && mc.getPlayer1() != null && mc.getPlayer2() != null)
+        {
             return "memory";
-        } else {
+        }
+
+        else {
             setShowloginfailed(true);
+            loggedIn = false;
             return "index";
         }
         } catch(Exception e)
-                {
+          {
             System.out.println("FEHLER LOGIN(): " + e.toString());
             e.printStackTrace();
-        }
-        return "index";
+          }
+        return "memory";
     }
 
     /**
@@ -186,7 +201,11 @@ public class LoginControl {
 
     public String getTurn()
     {
-        if(isMyTurn())
+        if(mc.isGameFinished())
+        {
+            return "Game Finished";
+        }
+        else if(isMyTurn())
             return "Your turn";
         else
             return "Opponents turn";
@@ -200,5 +219,20 @@ public class LoginControl {
     public void changeshow(int row, int column) {
         if(isMyTurn())
             mc.changeshow(row, column);
+    }
+
+    
+    /**
+     * @return the loggedIn
+     */
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    /**
+     * @param loggedIn the loggedIn to set
+     */
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 }

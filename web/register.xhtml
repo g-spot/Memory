@@ -41,6 +41,18 @@
                                         <f:selectItem itemValue="36" itemLabel="6x6"/>
                                     </h:selectOneMenu>
                             </div>
+                            <div>
+                                <h:outputLabel styleClass="Float" for="genre" value="#{msg.login_Genre}"/>
+                                    <h:selectOneMenu id="genre" value="#{rc.newplayer.genre}">
+                                        <f:selectItem itemLabel="Rock Music" itemValue="rock" />
+                                        <f:selectItem itemLabel="Pop Music" itemValue="pop" />
+                                        <f:selectItem itemLabel="Alternative" itemValue="alternative" />
+                                        <f:selectItem itemLabel="Eighties" itemValue="80s" />
+                                        <f:selectItem itemLabel="Metal Music" itemValue="metal" />
+                                        <f:selectItem itemLabel="Blues Music" itemValue="blues" />
+                                        <f:selectItem itemLabel="Hip Hop" itemValue="hip hop" />
+                                    </h:selectOneMenu>
+                                </div>
                         </fieldset>
                     </div>
 
@@ -66,7 +78,6 @@
                                     </h:inputText>
                                     <h:messages styleClass="error" for="lastname" showDetail="true" showSummary="false"/>
                                 </div>
-
                                 <div>
                                     <h:outputLabel styleClass="Float" for="dateofbirth" value="#{msg.birthdate}"/>
                                     <h:inputText id="dateofbirth" value="#{rc.newplayer.birthday}" validator="#{rc.validateBirthday}">

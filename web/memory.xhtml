@@ -11,24 +11,24 @@
             <ui:define name="navigation">
                 <h:form>
                     <ul>
-                        <li><h:commandLink value="#{msg.restart}" action="#{lc.mc.init}"/></li>
+                        <li><h:commandLink value="#{msg.restart}" action="#{lc.mc.restartInGame}"/></li>
                         <li><h:link outcome="index" value="#{msg.logout}(#{lc.name})"/></li>
                     </ul>
                 </h:form>
             </ui:define>
 
             <ui:define name="content">
-  <script type="text/javascript">
-  startAjaxPoll('foundpairs',1500);
-  startAjaxPoll('foundpairs2',1500);
-  startAjaxPoll('attempts',1500);
-  startAjaxPoll('attempts2',1500);
-  startAjaxPoll('time',1500);
-  startAjaxPoll('time2',1500);
-  startAjaxPoll('coveredpairs',1500);
-  startAjaxPoll('dynamic',1500);
-  startAjaxPoll('turn', 1500);
-  </script>
+              <script type="text/javascript">
+              startAjaxPoll('foundpairs',1500);
+              startAjaxPoll('foundpairs2',1500);
+              startAjaxPoll('attempts',1500);
+              startAjaxPoll('attempts2',1500);
+              startAjaxPoll('time',1500);
+              startAjaxPoll('time2',1500);
+              startAjaxPoll('coveredpairs',1500);
+              startAjaxPoll('dynamic',1500);
+              startAjaxPoll('turn', 1500);
+              </script>
 
                 <div id="info_area">
                     <h2>#{msg.gamestatus}</h2>
@@ -71,7 +71,7 @@
                             </tr>
                             <tr>
                                 <th xml:lang="en">#{msg.theme}</th>
-                                <td>Alternative Rock</td>
+                                <td><h:outputText id="theme" value="#{lc.mc.genre}"/></td>
                             </tr>
                         </tbody>
                     </table>
@@ -81,7 +81,29 @@
                 <hr class="accessibility" />
                 <div id="board">
                     <h2 class="accessibility">Spielbrett</h2>
-                    <h:outputText id="turn" value="#{lc.turn}" />
+                    <h3><h:outputText id="turn" value="#{lc.turn}" /></h3>
+
+                    <h:form id="restart" rendered="#{!lc.mc.gameFinished}">
+                            <fieldset>
+                                <div>
+                                    <h:outputLabel styleClass="Float" for="genre"/>
+                                        <h:selectOneMenu id="genre" value="#{lc.mc.genre}">
+                                            <f:selectItem itemLabel="Rock Music" itemValue="rock" />
+                                            <f:selectItem itemLabel="Pop Music" itemValue="pop" />
+                                            <f:selectItem itemLabel="Alternative" itemValue="alternative" />
+                                            <f:selectItem itemLabel="Eighties" itemValue="80s" />
+                                            <f:selectItem itemLabel="Metal Music" itemValue="metal" />
+                                            <f:selectItem itemLabel="Blues Music" itemValue="blues" />
+                                            <f:selectItem itemLabel="Hip Hop" itemValue="hip hop" />
+                                        </h:selectOneMenu>
+                                </div>
+                                <div id="buttons">
+                                    <h:commandButton value="#{msg.restart}" accesskey="r" action="#{lc.mc.restartInGame}" rendered="#{!lc.mc.gameFinished}"/>
+                                </div>
+                            </fieldset>
+                        
+                    </h:form>
+
                         <h:form id="dynamic">
                             <table summary="Diese Tabelle stellt das Memory-Brett mit den Karten dar">
                                 <tr class="accessibility">

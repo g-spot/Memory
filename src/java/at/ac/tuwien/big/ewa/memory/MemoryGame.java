@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import at.ac.tuwien.big.ewa.memory.MemoryCard.CardState;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 
 /**
  * Class representing a memory game.
@@ -460,12 +458,13 @@ public class MemoryGame {
 			_uncover(player, card);
 			this.currentCard2 = card;
 			boolean hadMatch = compareCurrentCards();
-			moveToNextPlayer();
+			//moveToNextPlayer();
 			if (coveredPairs.size() > 0) {
 				if (hadMatch) {
 					currentState = GameState.CARD2_MATCH;
 				} else {
 					currentState = GameState.CARD2_UNMATCH;
+                                        moveToNextPlayer();
 				}
 			} else {
 				currentState = GameState.GAME_OVER;

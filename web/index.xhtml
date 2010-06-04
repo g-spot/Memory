@@ -13,8 +13,22 @@
                 </ul>
             </ui:define>
             <ui:define name="content">
-                <mc:login  name="#{lc.name}" password="#{lc.password}" action="#{lc.login}"/>
+
+                <script type="text/javascript">
+                        startAjaxPoll('dynamic',1000);
+                </script>
+                <mc:login  name="#{lc.name}" password="#{lc.password}" action="#{lc.login}" rendered="#{!lc.loggedIn}"/>
+                <br></br>
                 <h:outputText value="#{msg.loginfailed}" styleClass="error" rendered="#{lc.showloginfailed}"/>
+
+                <h:form id="dynamic">
+                    <h:outputText value="#{lc.mc.gameState}" rendered="#{!lc.mc.gameReady}"/>
+                        <h:form rendered="#{lc.mc.gameReady}">
+                            <h:outputText value="Ready to start" />
+                            <br></br>
+                            <h:commandButton value="Join the game" action="#{lc.mc.joinGame}"/>
+                        </h:form>
+                </h:form>
             </ui:define>
         </ui:composition>
     </body>
