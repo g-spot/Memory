@@ -8,8 +8,10 @@ import at.ac.tuwien.big.ewa.memory.MemoryPlayer;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import tuwien.big.memory.entities.Player;
 import tuwien.big.memory.entities.RegisteredPlayerPool;
+import tuwien.big.memory.utilities.Utility;
 
 /**
  *
@@ -36,7 +38,31 @@ public class LoginControl {
     public LoginControl() {
     }
 
+    /*public void testHighscore() {
+        System.out.println("TESTING HIGHSCORE");
+        try
+        {
+            HighScoreServiceImplService hs = new HighScoreServiceImplService();
+            HighScoreService service = hs.getHighScoreServiceImplPort();
+            int result = 0;
+            HighScoreResultRequest request = new HighScoreResultRequest();
+            request.setAuthenticationToken("ewa4eva");
+            request.setGameMode("4x4");
+            request.setResult(new Integer(4));
+            request.setUsername("gerhard");
+            result = service.publishHighScoreResult(request);
+            System.out.println("TESTHIGHSCORE RESULT: " + result);
+        }
+        catch(Exception e)
+        {
+            System.out.println("FEHLER TESTHIGHSCORE: " + e.getMessage());
+            e.printStackTrace();;
+        }
+        System.out.println("END TESTING HIGHSCORE");
+    }*/
+
     public String login() {
+        //testHighscore();
         try
         {
         player = getRpp().getRegisteredPlayer(name, password);
@@ -203,12 +229,15 @@ public class LoginControl {
     {
         if(mc.isGameFinished())
         {
-            return "Game Finished";
+            if(mc.getMyHighscoreRank(player) == 0)
+                return Utility.getResourceText(FacesContext.getCurrentInstance(), "msg", "game_finished_error");
+            else
+                return Utility.getResourceText(FacesContext.getCurrentInstance(), "msg", "game_finished_success") + " " + mc.getMyHighscoreRank(player) + ")";
         }
         else if(isMyTurn())
-            return "Your turn";
+            return Utility.getResourceText(FacesContext.getCurrentInstance(), "msg", "your_turn");
         else
-            return "Opponents turn";
+            return Utility.getResourceText(FacesContext.getCurrentInstance(), "msg", "opponents_turn");
     }
 
     public double getRand()

@@ -14,6 +14,9 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import tuwien.big.memory.entities.Player;
+import tuwien.big.memory.webservice.HighScoreResultRequest;
+import tuwien.big.memory.webservice.HighScoreService;
+import tuwien.big.memory.webservice.HighScoreServiceImplService;
 
 /**
  *
@@ -26,6 +29,9 @@ public class MemoryControl {
     MemoryGame mgame = null;
     private boolean gameReady = false;
     private String gameState = "Game Status: Waiting for players...";
+    private boolean gameFinished = false;
+    private int highscoreRankPlayer1 = 0;
+    private int highscoreRankPlayer2 = 0;
 
     // GAMEMODE
     int stacksize = 0;
@@ -43,8 +49,8 @@ public class MemoryControl {
     private String backcardpath = "img/card_background.png";
 
     // RESULTS
-    private int resultPlayer1;
-    private int resultPlayer2;
+    private int resultPlayer1 = 0;
+    private int resultPlayer2 = 0;
 
     /** Creates a new instance of MemoryControl */
     public MemoryControl() {
@@ -131,6 +137,11 @@ public class MemoryControl {
 
         SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
         return sdf.format(new Date(millisec));
+    }
+
+    public int getTimeForPlayerInSeconds(MemoryPlayer player) {
+        long millisec = mgame.getSpentTime(player);
+        return (int)(millisec/1000);
     }
 
     public String getCoveredPairsCount() {
@@ -222,13 +233,28 @@ public class MemoryControl {
             return getPlayer2();
     }
 
+    public int getMyHighscoreRank(Player p)
+    {
+        if(getPlayer1().getName().equals(p.getName()))
+            return this.highscoreRankPlayer1;
+        else
+            return this.highscoreRankPlayer2;
+    }
+
     /**
      * @return the gameFinished
      */
     public boolean isGameFinished() {
         if(this.mgame.isGameOver())
         {
-            createResults();
+            System.out.println("GAME IS OVER");
+            if(!this.gameFinished) // sende results nur 1 mal
+            {
+                System.out.println("SUBMITTING HIGHSCORES");
+                this.gameFinished = true;
+                createResults();
+                submitHighscore();
+            }
             return true;
         }
         else {
@@ -252,23 +278,86 @@ public class MemoryControl {
 
     private void createResults()
     {
-        if(getPlayer1().getUncoveredMatchingPairsCount()!=0)
+        
+        try
         {
-            int time = Integer.getInteger(getTimeForPlayer(getPlayer1()));
-            this.setResultPlayer1(time / getPlayer1().getUncoveredMatchingPairsCount());
-        }
-        else {
-            this.setResultPlayer1(0);
-        }
+            System.out.println("TIME PLAYER 1: " + getTimeForPlayerInSeconds(getPlayer1()));
+            System.out.println("UNCOVERED PLAYER 1: " + getPlayer1().getUncoveredMatchingPairsCount());
+            if(getPlayer1().getUncoveredMatchingPairsCount()!=0)
+            {
+                resultPlayer1 = getTimeForPlayerInSeconds(getPlayer1()) / getPlayer1().getUncoveredMatchingPairsCount();
 
-        if(getPlayer2().getUncoveredMatchingPairsCount()!=0)
+            }
+            else {
+                resultPlayer1 = 0;
+            }
+            System.out.println("RESULT PLAYER 1: " + resultPlayer1);
+            System.out.println("TIME PLAYER 2: " + getTimeForPlayerInSeconds(getPlayer2()));
+            System.out.println("UNCOVERED PLAYER 2: " + getPlayer2().getUncoveredMatchingPairsCount());
+            if(getPlayer2().getUncoveredMatchingPairsCount()!=0)
+            {
+
+                resultPlayer2 = getTimeForPlayerInSeconds(getPlayer2()) / getPlayer2().getUncoveredMatchingPairsCount();
+            }
+            else {
+                resultPlayer2 = 0;
+            }
+            System.out.println("RESULT PLAYER 2: " + resultPlayer2);
+        } catch(Exception e) {
+            System.out.println("FEHLER CREATERESULTS: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void submitHighscore() {
+        try
         {
-            int time = Integer.getInteger(getTimeForPlayer(getPlayer2()));
-            this.setResultPlayer2(time / getPlayer2().getUncoveredMatchingPairsCount());
+            System.out.println("SCORE PLAYER 1: " + resultPlayer1);
+            System.out.println("SCORE PLAYER 2: " + resultPlayer2);
+            HighScoreServiceImplService hs = new HighScoreServiceImplService();
+            HighScoreService service = hs.getHighScoreServiceImplPort();
+            HighScoreResultRequest request = new HighScoreResultRequest();
+            request.setAuthenticationToken("ewa4eva");
+            String gameMode = null;
+            switch(this.stacksize) {
+                case 4:
+                    gameMode = "2x2";
+                    break;
+                case 16:
+                    gameMode = "4x4";
+                    break;
+                case 36:
+                    gameMode = "6x6";
+                    break;
+            }
+            System.out.println("GAMEMODE: " + this.stacksize + ", " + gameMode);
+            if(gameMode == null) // do not submit unallowed stacksize
+                return;
+
+            request.setGameMode(gameMode);
+
+            if(resultPlayer1 != 0)
+            {
+                System.out.println("SUBMITTING HIGHSCORE FOR PLAYER 1");
+                request.setResult(new Integer(getResultPlayer1()));
+                request.setUsername(getPlayer1().getName());
+                this.highscoreRankPlayer1 = service.publishHighScoreResult(request);
+            }
+            
+            if(resultPlayer2 != 0)
+            {
+                System.out.println("SUBMITTING HIGHSCORE FOR PLAYER 2");
+                request.setResult(new Integer(getResultPlayer2()));
+                request.setUsername(getPlayer2().getName());
+                this.highscoreRankPlayer2 = service.publishHighScoreResult(request);
+            }
         }
-        else {
-            this.setResultPlayer1(0);
+        catch(Exception e)
+        {
+            System.out.println("FEHLER TESTHIGHSCORE: " + e.getMessage());
+            e.printStackTrace();;
         }
+        System.out.println("END TESTING HIGHSCORE");
     }
 
     /**

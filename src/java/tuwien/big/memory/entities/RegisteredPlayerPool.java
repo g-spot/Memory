@@ -28,8 +28,14 @@ public class RegisteredPlayerPool {
         Player tp = new Player();
         tp.setName("t");
         tp.setPassword("t");
-        tp.setStacksize(16);
+        tp.setStacksize(4);
         regplayers.put("t", tp);
+
+        Player tp2 = new Player();
+        tp2.setName("gerhard");
+        tp2.setPassword("");
+        tp2.setStacksize(4);
+        regplayers.put("gerhard", tp2);
     }
 
     public boolean addPlayer(Player p) {
