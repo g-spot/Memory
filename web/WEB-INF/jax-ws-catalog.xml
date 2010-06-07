@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://pephimon.big.tuwien.ac.at/highscore/highscoreservice?wsdl" uri="wsdl/pephimon.big.tuwien.ac.at/highscore/highscoreservice.wsdl"/>
+    <system systemId="http://pephimon.big.tuwien.ac.at:80/highscore/highscoreservice?xsd=1" uri="wsdl/pephimon.big.tuwien.ac.at_80/highscore/highscoreservice.xsd_1.xsd"/>
+</catalog>
+

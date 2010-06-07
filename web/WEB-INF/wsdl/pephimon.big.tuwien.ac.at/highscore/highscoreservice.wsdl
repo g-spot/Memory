@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://webservice.highscore.big.tuwien.ac.at/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://webservice.highscore.big.tuwien.ac.at/" name="HighScoreServiceImplService">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://pephimon.big.tuwien.ac.at:80/highscore/highscoreservice?xsd=1" namespace="http://webservice.highscore.big.tuwien.ac.at/"></xsd:import>
+    </xsd:schema>
+  </types>
+  <message name="publishHighScoreResult">
+    <part name="HighScoreResultRequest" type="tns:highScoreResultRequest"></part>
+  </message>
+  <message name="publishHighScoreResultResponse">
+    <part name="return" type="xsd:int"></part>
+  </message>
+  <message name="HighScoreException">
+    <part element="tns:HighScoreException" name="HighScoreException"></part>
+  </message>
+  <portType name="HighScoreService">
+    <operation name="publishHighScoreResult" parameterOrder="HighScoreResultRequest">
+      <input message="tns:publishHighScoreResult"></input>
+      <output message="tns:publishHighScoreResultResponse"></output>
+      <fault message="tns:HighScoreException" name="HighScoreException"></fault>
+    </operation>
+  </portType>
+  <binding name="HighScoreServiceImplPortBinding" type="tns:HighScoreService">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <operation name="publishHighScoreResult">
+      <soap:operation soapAction=""></soap:operation>
+      <input>
+        <soap:body use="literal" namespace="http://webservice.highscore.big.tuwien.ac.at/"></soap:body>
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://webservice.highscore.big.tuwien.ac.at/"></soap:body>
+      </output>
+      <fault name="HighScoreException">
+        <soap:fault name="HighScoreException" use="literal"></soap:fault>
+      </fault>
+    </operation>
+  </binding>
+  <service name="HighScoreServiceImplService">
+    <port name="HighScoreServiceImplPort" binding="tns:HighScoreServiceImplPortBinding">
+      <soap:address location="http://pephimon.big.tuwien.ac.at:80/highscore/highscoreservice"></soap:address>
+    </port>
+  </service>
+</definitions>
