@@ -5,6 +5,8 @@
 package tuwien.big.memory.controller;
 
 import at.ac.tuwien.big.ewa.memory.MemoryCard;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import at.ac.tuwien.big.ewa.memory.MemoryGame;
 import at.ac.tuwien.big.ewa.memory.MemoryPlayer;
@@ -60,6 +62,13 @@ public class MemoryControl {
         this.stacksize = stacksize;
         this.genre = genre;
         this.playername1 = playername;
+        
+        try {
+            RegisterControl.LastFmCall("pop");
+        } catch (Exception ex) {
+            Logger.getLogger(MemoryControl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         init();
     }
 

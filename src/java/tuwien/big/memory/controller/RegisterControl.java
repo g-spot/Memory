@@ -8,6 +8,8 @@ import tuwien.big.memory.utilities.Utility;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -16,6 +18,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.validator.ValidatorException;
+import net.roarsoftware.lastfm.Artist;
+import net.roarsoftware.lastfm.ImageSize;
+import net.roarsoftware.lastfm.Tag;
+import net.roarsoftware.lastfm.Track;
 import tuwien.big.memory.entities.Player;
 import tuwien.big.memory.entities.RegisteredPlayerPool;
 
@@ -37,6 +43,7 @@ public class RegisterControl {
 
     /** Creates a new instance of RegisterControl */
     public RegisterControl() {
+
     }
 
     public String register() {
@@ -132,4 +139,35 @@ public class RegisterControl {
     public void setRegistrationsuccessful(boolean registrationsuccessful) {
         this.registrationsuccessful = registrationsuccessful;
     }
+
+    /*Aufruf:
+     *  try
+        {
+            RegisterControl.LastFmCall("rock");
+        } catch (Exception ex)
+        {
+            System.out.println("Fehler: "+ex.getMessage());
+        }
+     * 
+     */
+    public static ArrayList<String> LastFmCall(String genre) throws Exception
+    {
+        int count =0;
+        ArrayList<String> linkList = new ArrayList<String>();
+        String key = "9519d31ff23e1f96ba100660428bc26d";
+        
+        Collection<Artist> topArtists = Tag.getTopArtists(genre, key);
+        //System.out.println("=========AB HIER topArtists");
+        for (Artist artist : topArtists)
+        {
+            count++;
+            //System.out.println(artist.getName() + ": " + artist.getImageURL(ImageSize.SMALL));
+            linkList.add(artist.getImageURL(ImageSize.SMALL));//Groese des Images!
+            if(count>=16)
+                break;
+        }
+        //System.out.println("=========BIS HIER" + count + " topArtists");
+
+        return linkList;
+     }
 }
