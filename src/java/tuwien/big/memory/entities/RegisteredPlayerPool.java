@@ -29,12 +29,14 @@ public class RegisteredPlayerPool {
         tp.setName("t");
         tp.setPassword("t");
         tp.setStacksize(4);
+        tp.setGenre("80s");
         regplayers.put("t", tp);
 
         Player tp2 = new Player();
         tp2.setName("gerhard");
         tp2.setPassword("");
         tp2.setStacksize(4);
+        tp2.setGenre("metal");
         regplayers.put("gerhard", tp2);
     }
 

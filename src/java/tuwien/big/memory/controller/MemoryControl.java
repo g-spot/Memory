@@ -69,25 +69,12 @@ public class MemoryControl {
 
     /** Creates a new instance of MemoryControl */
     public MemoryControl() {
-        try {
-            LastFMRequest.getTopArtists("pop");
-        } catch (Exception ex) {
-            Logger.getLogger(MemoryControl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        initTopArtists();
     }
 
     public MemoryControl(String playername, int stacksize, String genre) {
         this.stacksize = stacksize;
         this.genre = genre;
         this.playername1 = playername;
-        
-        try {
-            LastFMRequest.getTopArtists("pop");
-        } catch (Exception ex) {
-            Logger.getLogger(MemoryControl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         initTopArtists();
         init();
     }
@@ -135,6 +122,7 @@ public class MemoryControl {
             this.stacksize = stacksize;
             this.genre = genre;
             this.playername1 = playername;
+            initTopArtists();
         }
         else
             this.playername2 = playername;
