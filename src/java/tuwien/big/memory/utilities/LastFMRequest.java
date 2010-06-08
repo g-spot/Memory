@@ -7,6 +7,7 @@ package tuwien.big.memory.utilities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import net.roarsoftware.lastfm.Album;
 import net.roarsoftware.lastfm.Artist;
 import net.roarsoftware.lastfm.ImageSize;
 import net.roarsoftware.lastfm.Tag;
@@ -16,6 +17,8 @@ import net.roarsoftware.lastfm.Tag;
  * @author gerhard
  */
 public class LastFMRequest {
+
+    private static String apiKey = "9519d31ff23e1f96ba100660428bc26d";
 
     /*Aufruf:
      *  try
@@ -31,9 +34,9 @@ public class LastFMRequest {
     {
         int count =0;
         ArrayList<Artist> artistList = new ArrayList<Artist>();
-        String key = "9519d31ff23e1f96ba100660428bc26d";
+        //String key = "9519d31ff23e1f96ba100660428bc26d";
 
-        Collection<Artist> topArtists = Tag.getTopArtists(genre, key);
+        Collection<Artist> topArtists = Tag.getTopArtists(genre, apiKey);
         System.out.println("=========AB HIER topArtists");
         for (Artist artist : topArtists)
         {
@@ -48,4 +51,16 @@ public class LastFMRequest {
 
         return artistList;
      }
+
+    public static ArrayList<String> getMemoryImages(String genre) throws Exception
+    {
+        ArrayList<String> imagesList = new ArrayList<String>();
+        Collection<Album> topAlbums = Tag.getTopAlbums(genre, apiKey);
+        for(Album album:topAlbums)
+        {
+            imagesList.add(album.getImageURL(ImageSize.MEDIUM));
+        }
+        return imagesList;
+
+    }
 }
