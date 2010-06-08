@@ -51,7 +51,8 @@ public class MemoryControl {
     private MemoryPlayer player2 = null;
     private String cardpath = "img/card_images/card";
     private String cardpathext = ".jpg";
-    private String backcardpath = "img/card_background.png";
+    //private String backcardpath = "img/card_background.png";
+    private String backcardpath = "http://www.lj-dechantskirchen.at/gerhard/card_background.png";
 
     // RESULTS
     private int resultPlayer1 = 0;
@@ -143,8 +144,15 @@ public class MemoryControl {
 
         List<String> cardlist = new ArrayList<String>();
 
-        for (int i = 1; i <= (stacksize / 2); i++) {
-            cardlist.add(cardpath + i + cardpathext);
+        try
+        {
+            cardlist = LastFMRequest.getMemoryImages(genre,stacksize/2);
+        }
+        catch(Exception e) {
+            cardlist.clear();
+            for (int i = 1; i <= (stacksize / 2); i++) {
+                cardlist.add(cardpath + i + cardpathext);
+            }
         }
 
         if(mgame == null)
@@ -162,8 +170,15 @@ public class MemoryControl {
 
         List<String> cardlist = new ArrayList<String>();
 
-        for (int i = 1; i <= (stacksize / 2); i++) {
-            cardlist.add(cardpath + i + cardpathext);
+        try
+        {
+            cardlist = LastFMRequest.getMemoryImages(genre,stacksize/2);
+        }
+        catch(Exception e) {
+            cardlist.clear();
+            for (int i = 1; i <= (stacksize / 2); i++) {
+                cardlist.add(cardpath + i + cardpathext);
+            }
         }
 
         mgame = new MemoryGame(playerlist, cardlist);

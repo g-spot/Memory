@@ -52,13 +52,18 @@ public class LastFMRequest {
         return artistList;
      }
 
-    public static ArrayList<String> getMemoryImages(String genre) throws Exception
+    public static ArrayList<String> getMemoryImages(String genre, int cardCount) throws Exception
     {
         ArrayList<String> imagesList = new ArrayList<String>();
         Collection<Album> topAlbums = Tag.getTopAlbums(genre, apiKey);
+        int counter = 0;
         for(Album album:topAlbums)
         {
+            counter ++;
             imagesList.add(album.getImageURL(ImageSize.MEDIUM));
+            System.out.println("IMAGEURL: " + album.getImageURL(ImageSize.MEDIUM));
+            if(counter >= cardCount)
+                break;
         }
         return imagesList;
 

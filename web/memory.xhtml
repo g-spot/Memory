@@ -121,7 +121,7 @@
                                             <ui:repeat value="#{row}" var="card" >
                                                 <td class="#{card.currentState.toString().equals('UNCOVERED')?'visible_card':''}">
                                                     <h:commandLink action="#{lc.changeshow(card.row,card.column)}">
-                                                        <h:graphicImage name="#{card.currentState.toString().equals('UNCOVERED')?card.id:lc.mc.backcardpath}" alt="card"/>
+                                                        <h:graphicImage url="#{card.currentState.toString().equals('UNCOVERED')?card.id:lc.mc.backcardpath}" alt="card"/>
                                                     </h:commandLink>
                                                 </td>
                                             </ui:repeat>
