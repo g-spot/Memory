@@ -27,24 +27,25 @@ public class LastFMRequest {
         }
      *
      */
-    public static ArrayList<String> getTopArtists(String genre) throws Exception
+    public static ArrayList<Artist> getTopArtists(String genre) throws Exception
     {
         int count =0;
-        ArrayList<String> linkList = new ArrayList<String>();
+        ArrayList<Artist> artistList = new ArrayList<Artist>();
         String key = "9519d31ff23e1f96ba100660428bc26d";
 
         Collection<Artist> topArtists = Tag.getTopArtists(genre, key);
-        //System.out.println("=========AB HIER topArtists");
+        System.out.println("=========AB HIER topArtists");
         for (Artist artist : topArtists)
         {
             count++;
-            //System.out.println(artist.getName() + ": " + artist.getImageURL(ImageSize.SMALL));
-            linkList.add(artist.getImageURL(ImageSize.SMALL));//Groese des Images!
-            if(count>=16)
+            System.out.println(artist.getName() + ": " + artist.getImageURL(ImageSize.SMALL));
+            //artistList.put(artist.getName(), artist.getImageURL(ImageSize.SMALL));//Groese des Images!
+            artistList.add(artist);
+            if(count==3)
                 break;
         }
-        //System.out.println("=========BIS HIER" + count + " topArtists");
+        System.out.println("=========BIS HIER" + count + " topArtists");
 
-        return linkList;
+        return artistList;
      }
 }

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
+import net.roarsoftware.lastfm.Artist;
+import net.roarsoftware.lastfm.ImageSize;
 import tuwien.big.memory.entities.Player;
 import tuwien.big.memory.utilities.LastFMRequest;
 import tuwien.big.memory.webservice.HighScoreResultRequest;
@@ -39,7 +41,7 @@ public class MemoryControl {
     // GAMEMODE
     int stacksize = 0;
 
-    private String genre;
+    private String genre = "pop";
 
     // NAMEN DER SPIELER
     private String playername1 = "Player1";
@@ -55,8 +57,24 @@ public class MemoryControl {
     private int resultPlayer1 = 0;
     private int resultPlayer2 = 0;
 
+    private String topArtist1 = null;
+    private String topArtist2 = null;
+    private String topArtist3 = null;
+    private String topArtistURL1 = null;
+    private String topArtistURL2 = null;
+    private String topArtistURL3 = null;
+    private String topArtistImage1 = null;
+    private String topArtistImage2 = null;
+    private String topArtistImage3 = null;
+
     /** Creates a new instance of MemoryControl */
     public MemoryControl() {
+        try {
+            LastFMRequest.getTopArtists("pop");
+        } catch (Exception ex) {
+            Logger.getLogger(MemoryControl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        initTopArtists();
     }
 
     public MemoryControl(String playername, int stacksize, String genre) {
@@ -64,14 +82,51 @@ public class MemoryControl {
         this.genre = genre;
         this.playername1 = playername;
         
-        /*try {
+        try {
             LastFMRequest.getTopArtists("pop");
         } catch (Exception ex) {
             Logger.getLogger(MemoryControl.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
 
-        
+        initTopArtists();
         init();
+    }
+
+    private void initTopArtists()
+    {
+        try
+        {
+            ArrayList<Artist> artistList = LastFMRequest.getTopArtists(genre);
+            for(Artist artist:artistList)
+            {
+                if(getTopArtist1() == null) {
+                    topArtist1 = artist.getName();
+                    topArtistURL1 = artist.getUrl();
+                    topArtistImage1 = artist.getImageURL(ImageSize.SMALL);
+                } else if (getTopArtist2() == null) {
+                    topArtist2 = artist.getName();
+                    topArtistURL2 = artist.getUrl();
+                    topArtistImage2 = artist.getImageURL(ImageSize.SMALL);
+                } else {
+                    topArtist3 = artist.getName();
+                    topArtistURL3 = artist.getUrl();
+                    topArtistImage3 = artist.getImageURL(ImageSize.SMALL);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            topArtist1 = "Fehler";
+            topArtist2 = "Fehler";
+            topArtist3 = "Fehler";
+            topArtistURL1 = "";
+            topArtistURL2 = "";
+            topArtistURL3 = "";
+            topArtistImage1 = "";
+            topArtistImage2 = "";
+            topArtistImage3 = "";
+            System.out.println("DO HOTS WOS BEI DIE ARTISTEN");
+        }
     }
 
     public void addPlayer(String playername, int stacksize, String genre) {
@@ -454,6 +509,69 @@ public class MemoryControl {
     public String joinGame()
     {
         return "memory";
+    }
+
+    /**
+     * @return the topArtist1
+     */
+    public String getTopArtist1() {
+        return topArtist1;
+    }
+
+    /**
+     * @return the topArtist2
+     */
+    public String getTopArtist2() {
+        return topArtist2;
+    }
+
+    /**
+     * @return the topArtist3
+     */
+    public String getTopArtist3() {
+        return topArtist3;
+    }
+
+    /**
+     * @return the topArtistURL1
+     */
+    public String getTopArtistURL1() {
+        return topArtistURL1;
+    }
+
+    /**
+     * @return the topArtistURL2
+     */
+    public String getTopArtistURL2() {
+        return topArtistURL2;
+    }
+
+    /**
+     * @return the topArtistURL3
+     */
+    public String getTopArtistURL3() {
+        return topArtistURL3;
+    }
+
+    /**
+     * @return the topArtistImage1
+     */
+    public String getTopArtistImage1() {
+        return topArtistImage1;
+    }
+
+    /**
+     * @return the topArtistImage2
+     */
+    public String getTopArtistImage2() {
+        return topArtistImage2;
+    }
+
+    /**
+     * @return the topArtistImage3
+     */
+    public String getTopArtistImage3() {
+        return topArtistImage3;
     }
 
 

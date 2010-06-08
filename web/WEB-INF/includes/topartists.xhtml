@@ -7,9 +7,9 @@
     <ui:composition>
         <h2>#{msg.topartists}</h2>
         <ul id="top_artists">
-            <li><a href="http://www.last.fm/music/Muse"><img src="http://userserve-ak.last.fm/serve/64/313534.jpg" alt="Muse"/> Muse</a></li>
-            <li><a href="http://www.last.fm/music/Placebo"><img src="http://userserve-ak.last.fm/serve/64/163666.jpg" alt="Placebo"/> Placebo</a></li>
-            <li><a href="http://www.last.fm/music/Radiohead"><img src="http://userserve-ak.last.fm/serve/64/31378905.png" alt="Radiohead"/> Radiohead</a></li>
+            <li><a href="#{mc.topArtistURL1}"><img src="#{mc.topArtistImage1}" alt="#{mc.topArtist1}"/> #{mc.topArtist1}</a></li>
+            <li><a href="#{mc.topArtistURL2}"><img src="#{mc.topArtistImage2}" alt="#{mc.topArtist2}"/> #{mc.topArtist2}</a></li>
+            <li><a href="#{mc.topArtistURL3}"><img src="#{mc.topArtistImage3}" alt="#{mc.topArtist3}"/> #{mc.topArtist3}</a></li>
         </ul>
     </ui:composition>
 </html>
