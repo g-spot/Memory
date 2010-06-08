@@ -4,3 +4,5 @@ build/
 build/*
 # ignore private properties
 nbproject/private/
+.DS_Store
+

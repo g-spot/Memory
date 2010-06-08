@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import tuwien.big.memory.entities.Player;
+import tuwien.big.memory.utilities.LastFMRequest;
 import tuwien.big.memory.webservice.HighScoreResultRequest;
 import tuwien.big.memory.webservice.HighScoreService;
 import tuwien.big.memory.webservice.HighScoreServiceImplService;
@@ -63,11 +64,12 @@ public class MemoryControl {
         this.genre = genre;
         this.playername1 = playername;
         
-        try {
-            RegisterControl.LastFmCall("pop");
+        /*try {
+            LastFMRequest.getTopArtists("pop");
         } catch (Exception ex) {
             Logger.getLogger(MemoryControl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
+
         
         init();
     }
